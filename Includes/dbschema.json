@@ -1,0 +1,65 @@
+{
+    "games": {
+        "fields": {
+            "Id": "INTEGER",
+            "TeamAName": "TEXT",
+            "TeamBName": "TEXT",
+            "PoolName": "TEXT",
+            "ScoreA": "INTEGER",
+            "ScoreB": "INTEGER",
+            "Date": "TEXT"
+        },
+        "key": {
+            "Id": true
+        },
+        "fkey": {
+            "TeamAName": "teams",
+            "TeamBName": "teams",
+            "PoolName": "pools"
+        },
+        "entityclass": "GameEntity"
+    },
+    "players": {
+        "fields": {
+            "Id": "INTEGER",
+            "TeamName": "TEXT",
+            "GivenName": "TEXT",
+            "FamilyName": "TEXT",
+            "Dob": "TEXT",
+            "Handed": "TEXT"
+        },
+        "key": {
+            "Id": true
+        },
+        "fkey": {
+            "TeamName": "teams"
+        },
+        "entityclass": "PlayerEntity"
+    },
+    "pools": {
+        "fields": {
+            "Name": "TEXT",
+            "Length": "INTEGER",
+            "Address": "TEXT"
+        },
+        "key": {
+            "Name": false
+        },
+        "fkey": null,
+        "entityclass": "PoolEntity"
+    },
+    "teams": {
+        "fields": {
+            "Name": "TEXT",
+            "PoolName": "TEXT",
+            "Manager": "TEXT"
+        },
+        "key": {
+            "Name": false
+        },
+        "fkey": {
+            "PoolName": "pools"
+        },
+        "entityclass": "TeamEntity"
+    }
+}
