@@ -1,8 +1,9 @@
 <?php
 
 require_once("DbInitializer.php");
+require_once("ICrudRepository.php");
 
-class DbContext
+class DbContext implements ICrudRepository
 {
     private $dbPath;
     private $dbSchemaPath;
@@ -55,6 +56,7 @@ class DbContext
         return $this->dbSchema;
     }
 
+    // Find the table name related to the entity class name
     private function GetTableNameFromEntityType($entityType)
     {
         $schema = $this->GetDbSchema();
@@ -70,6 +72,7 @@ class DbContext
         return null;
     }
 
+    // Add new entity to database
     public function Create($entity)
     {
         $className = get_class($entity);
@@ -218,7 +221,7 @@ class DbContext
 
     public function ReadAll($entityName)
     {
-        $tableName =  $this->GetTableNameFromEntityType($className);
+        $tableName =  $this->GetTableNameFromEntityType($entityName);
         $fields = array_keys($this->GetDbSchema()[$tableName]['fields']);
         $key = $this->GetDbSchema()[$tableName]['key'];
         $keyName = array_keys($key)[0];
@@ -227,6 +230,22 @@ class DbContext
 
         $query = "SELECT ".implode(", ", $fields).
             " FROM ".$tableName.";";
+        error_log($query);
+        $statement = $this->GetDbHandle()->prepare($query);
+        $result = $statement->execute();
+
+        $entityArray = array();
+        while ($resultArray = $result->fetchArray())
+        {
+            $entity = new $entityName();
+            foreach($fields as $fieldName)
+            {
+                $entity->$fieldName = $resultArray[$fieldName];
+            }
+            array_push($entityArray, $entity);
+        }
+
+        return $entityArray;
     }
 }
 ?>

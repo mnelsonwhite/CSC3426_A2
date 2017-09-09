@@ -3,8 +3,9 @@
 interface ICrudRepository
 {
     public function Create($entity);
-    public function Read($id);
-    public function Update($entity);
-    public function Delete($id);
+    public function Read($entity);
+    public function ReadAll($entityName);
+    public function Update($entity, $updateFields);
+    public function Delete($entity);
 }
 ?>
