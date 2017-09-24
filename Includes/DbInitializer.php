@@ -19,16 +19,14 @@ class DbInitializer
         $fields = $this->dbSchema[$tableName]['fields'];
         $key = $this->dbSchema[$tableName]['key'];
 
-        $fieldDeclr = array();
+        $fieldDeclr = [];
         foreach($fields as $fieldName=>$fieldType)
         {
-            array_push(
-                $fieldDeclr,
-                $this->FieldDeclaration(
-                    $fieldName,
-                    $fieldType,
-                    $key,
-                    $tableName));
+            $fieldDeclr[] = $this->FieldDeclaration(
+                $fieldName,
+                $fieldType,
+                $key,
+                $tableName);
         }
 
         $fKeys = $this->dbSchema[$tableName]['fkey'];
@@ -37,10 +35,7 @@ class DbInitializer
         {
             foreach($fKeys as $fKeyField=>$fKeyTable)
             {
-                array_push(
-                    $fieldDeclr,
-                    $this->ForeignKeyDeclaration($fKeyField, $fKeyTable)
-                );
+                $fieldDeclr[] = $this->ForeignKeyDeclaration($fKeyField, $fKeyTable);
             }
         }
         
@@ -90,12 +85,17 @@ class DbInitializer
         return $declr;
     }
 
+    public function GetDependencyOrder()
+    {
+        $resolver = new DependencyGraphResolver();
+        return $resolver->GetDependencyOrder($this->dbSchema);
+    }
+
     public function Initialize()
     {
         // Resolve foreign key dependency graph for
         // valid constraints
-        $resolver = new DependencyGraphResolver();
-        $dependencies = $resolver->GetDependencyOrder($this->dbSchema);
+        $dependencies = $this->GetDependencyOrder();
         
         foreach($dependencies as $table)
         {

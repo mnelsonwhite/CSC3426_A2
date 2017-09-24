@@ -1,4 +1,5 @@
 <?php
+
 class PlayerEntity
 {
     // Key
@@ -11,4 +12,5 @@ class PlayerEntity
     public $Dob;
     public $Handed;
 }
+
 ?>

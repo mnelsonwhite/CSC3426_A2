@@ -1,4 +1,5 @@
 <?php
+
 class GameEntity
 {
     // Key
@@ -14,4 +15,5 @@ class GameEntity
     public $ScoreB;
     public $Date;
 }
+
 ?>

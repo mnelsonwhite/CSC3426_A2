@@ -10,13 +10,13 @@ class DependencyGraphResolver
 
     private function BuildGraph($dbSchema)
     {
-        $graph = array();
+        $graph = [];
 
         // get schema keys
         foreach ($dbSchema as $key=>$value)
         {
             if (!isset($graph[$key])) {
-                $graph[$key] = array();
+                $graph[$key] = [];
             } 
 
             $edges = $value['fkey'];
@@ -24,7 +24,7 @@ class DependencyGraphResolver
             {
                 foreach($edges as $edge)
                 {
-                    array_push($graph[$key], $edge);
+                    $graph[$key][] = $edge;
                 }
             }
         }
@@ -35,7 +35,7 @@ class DependencyGraphResolver
     private function ResolveDependency($graph)
     {
         $expectedKeys = count((array) $graph);
-        $dep = array();
+        $dep = [];
         $lastCount = 0;
 
         while (count($dep) < $expectedKeys)
@@ -52,7 +52,7 @@ class DependencyGraphResolver
                     // if the node has no dependencies then include
                     if (count($nd) == 0)
                     {
-                        array_push($dep, $node);
+                        $dep[] = $node;
                     }
                     else
                     {
@@ -70,7 +70,7 @@ class DependencyGraphResolver
         
                         if ($all)
                         {
-                            array_push($dep, $node);
+                            $dep[] = $node;
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 <?php
+
 class PoolEntity
 {
     // Key
@@ -7,4 +8,5 @@ class PoolEntity
     public $Length;
     public $Address;
 }
+
 ?>
