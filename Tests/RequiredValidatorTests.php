@@ -59,41 +59,6 @@ final class RequiredValidatorTests extends TestCase
         $this->assertTrue(is_string($actual));
     }
 
-    /**
-     * @test
-     */
-    public function WhenNotSet_ShouldBeDefaultMessage()
-    {
-        // Arrange
-        $value = null;
-        $expected = "This field is required";
-        
-        // Act
-        $actual = $this->validator->ValidateField($value);
-
-        // Assert
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @test
-     */
-    public function WhenReplacedMessage_ShouldBeExpectedMessage()
-    {
-        // Arrange
-        $value = null;
-        $expected = "Replaced message";
-        $args = [
-            "message" => $expected
-        ];
-        
-        // Act
-        $actual = $this->validator->ValidateField($value, $args);
-
-        // Assert
-        $this->assertEquals($expected, $actual);
-    }
-
     public function ValidValues()
     {
         return [

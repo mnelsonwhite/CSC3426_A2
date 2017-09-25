@@ -6,24 +6,13 @@ abstract class FieldValidatorBase implements IFieldValidator
 {
 
     public abstract function GetName() : string;
-    public abstract function IsValid($value) : bool;
+    public abstract function IsValid($value, array $args) : bool;
     public abstract function GetDefaultMessage() : string;
 
-    public function ValidateField($value, $args = true)
+    public function ValidateField($value, $args = [])
     {
-        $message = $this->GetDefaultMessage();;
-
-        if (is_array($args) && isset($args["message"]))
-        {
-            $message = $args["message"];
-        }
-
-        if (is_bool($args) && $args === false)
-        {
-            return true;
-        }
-
-        return $this->IsValid($value) ? true : $message;
+        $message = $args["message"] ?? $this->GetDefaultMessage();
+        return $this->IsValid($value, $args) ? true : $message;
     }
 }
 

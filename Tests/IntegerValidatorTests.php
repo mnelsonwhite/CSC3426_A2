@@ -58,41 +58,6 @@ final class IntegerValidatorTests extends TestCase
         $this->assertTrue(is_string($actual));
     }
 
-    /**
-     * @test
-     */
-    public function WhenInvalidInteger_ShouldBeDefaultMessage()
-    {
-        // Arrange
-        $value = "not an integer";
-        $expected = "Value must be an integer";
-        
-        // Act
-        $actual = $this->validator->ValidateField($value);
-
-        // Assert
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @test
-     */
-    public function WhenReplacedMessage_ShouldBeExpectedMessage()
-    {
-        // Arrange
-        $value = "not an integer";
-        $expected = "Replaced message";
-        $args = [
-            "message" => $expected
-        ];
-        
-        // Act
-        $actual = $this->validator->ValidateField($value, $args);
-
-        // Assert
-        $this->assertEquals($expected, $actual);
-    }
-
     public function ValidIntegers()
     {
         return [

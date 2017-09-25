@@ -1,29 +1,37 @@
 <?php
 
-require_once("IFieldValidator.php");
+require_once("FieldValidatorBase.php");
 
-abstract class FieldValidator implements IFieldValidator
+class DateValidator extends FieldValidatorBase
 {
-
-    public abstract function GetName() : string;
-    public abstract function IsValid($value) : bool;
-    public abstract function GetDefaultMessage() : string;
-
-    public function ValidateField($value, $args = true)
+    public function IsValid($value, array $args) : bool
     {
-        $message = $this->GetDefaultMessage();;
-
-        if (is_array($args) && isset($args["message"]))
+        if (is_string($value))
         {
-            $message = $args["message"];
-        }
+            $format = $args["format"] ?? "Y-m-d";
 
-        if (is_bool($args) && $args === false)
+            // Possible race condition
+            // Last errors are required since 2001-01-99 is parsed as a valid date (gg php)
+            $isDate = is_a(DateTime::createFromFormat($format, $value), "DateTime");
+            $errors = DateTime::getLastErrors();
+            return $isDate && !empty($errors) && $errors["warning_count"] === 0;
+        }
+        else if (is_a($value, "DateTime"))
         {
             return true;
         }
 
-        return $this->IsValid($value) ? true : $message;
+        return false;
+    }
+
+    public function GetName() : string
+    {
+        return "required";
+    }
+
+    public function GetDefaultMessage() : string
+    {
+        return "Must be a valid date";
     }
 }
 

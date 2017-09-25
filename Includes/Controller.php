@@ -8,12 +8,17 @@ class Controller
         // Default the view to 'Default'
         $viewName = $request["Query"]["view"] ?? "Default";
         // Action is optional
-        $actionName = $request["Query"]["action"] ?? null;
+        $areaName = $request["Query"]["area"] ?? null;
         $requestMethod = strtolower($request["Method"]);
 
-        $viewfile = isset($actionName)
-            ? "Views/$viewName.$actionName.$requestMethod.php"
-            : "Views/$viewName.$requestMethod.php";
+        $viewfile = "Views/";
+
+        if (isset($areaName))
+        {
+            $viewfile = $viewfile."$areaName/";
+        }
+
+        $viewfile = $viewfile."$viewName.$requestMethod.php";
         
         include("Views/Layout.php");
     }

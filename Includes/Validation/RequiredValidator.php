@@ -4,7 +4,7 @@ require_once("FieldValidatorBase.php");
 
 class RequiredValidator extends FieldValidatorBase
 {
-    public function IsValid($value) : bool
+    public function IsValid($value, array $args) : bool
     {
         return is_bool($value) || !empty($value);
     }
