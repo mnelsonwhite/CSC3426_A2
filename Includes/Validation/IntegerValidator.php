@@ -1,29 +1,12 @@
 <?php
 
-require_once("IFieldValidator.php");
+require_once("FieldValidatorBase.php");
 
-class IntegerValidator implements IFieldValidator
+class IntegerValidator extends FieldValidatorBase
 {
-    public function ValidateField($value, $args = true)
+    public function IsValid($value) : bool
     {
-        $message = "Value must be an integer";
-
-        if (is_array($args) && isset($args["message"]))
-        {
-            $message = $args["message"];
-        }
-
-        if (!isset($value) || (is_bool($args) && $args === false))
-        {
-            return true;
-        }
-
-        if (!$this->IsInt($value))
-        {
-            return $message;
-        }
-
-        return true;
+        return !isset($value) || filter_var($value, FILTER_VALIDATE_INT);
     }
 
     public function GetName() : string
@@ -31,11 +14,11 @@ class IntegerValidator implements IFieldValidator
         return "integer";
     }
 
-    private function IsInt($value) : bool
+    public function GetDefaultMessage() : string
     {
-        return filter_var($value, FILTER_VALIDATE_INT);
-        //return ctype_digit(strval($value));
+        return "Value must be an integer";
     }
+
 }
 
 ?>

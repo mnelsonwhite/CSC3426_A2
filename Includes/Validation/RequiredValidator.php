@@ -1,34 +1,22 @@
 <?php
 
-require_once("IFieldValidator.php");
+require_once("FieldValidatorBase.php");
 
-class RequiredValidator implements IFieldValidator
+class RequiredValidator extends FieldValidatorBase
 {
-    public function ValidateField($value, $args = true)
+    public function IsValid($value) : bool
     {
-        $message = "This field is required";
-        
-        if (is_array($args) && isset($args["message"]))
-        {
-            $message = $args["message"];
-        }
-
-        if (is_bool($args) && $args === false)
-        {
-            return true;
-        }
-
-        if (!is_bool($value) && empty($value))
-        {
-            return $message;
-        }
-
-        return true;
+        return is_bool($value) || !empty($value);
     }
 
     public function GetName() : string
     {
         return "required";
+    }
+
+    public function GetDefaultMessage() : string
+    {
+        return "This field is required";
     }
 }
 
