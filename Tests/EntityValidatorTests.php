@@ -72,8 +72,8 @@ final class EntityValidatorTests extends TestCase
     /**
      * @test
      * @dataProvider When_IsFieldDataTypeCorrect_IsIncorrect_ShouldBeFalse_Provider 
-     * When IsFieldDataTypeCorrect is correct
-     * ShouldBe true
+     * When IsFieldDataTypeCorrect is incorrect
+     * ShouldBe false
      */
     public function When_IsFieldDataTypeCorrect_IsIncorrect_ShouldBeFalse(
         $entity,
