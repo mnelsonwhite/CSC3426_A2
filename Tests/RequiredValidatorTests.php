@@ -1,23 +1,23 @@
 <?php
 
-require_once("Includes/Validation/IntegerValidator.php");
+require_once("Includes/Validation/RequiredValidator.php");
 
 use PHPUnit\Framework\TestCase;
 
-final class IntegerValidatorTests extends TestCase
+final class RequiredValidatorTests extends TestCase
 {
     private $validator;
 
     public function setUp()
     {
-        $this->validator = new IntegerValidator();
+        $this->validator = new RequiredValidator();
     }
 
     /**
      * @test
-     * @dataProvider ValidIntegers 
+     * @dataProvider ValidValues
      */
-    public function WhenValidInteger_ShouldBeBool($value)
+    public function WhenSet_ShouldBeBool($value)
     {
         // Arrange
 
@@ -30,9 +30,9 @@ final class IntegerValidatorTests extends TestCase
 
     /**
      * @test
-     * @dataProvider ValidIntegers 
+     * @dataProvider ValidValues 
      */
-    public function WhenValidInteger_ShouldBeTrue($value)
+    public function WhenSet_ShouldBeTrue($value)
     {
         // Arrange
  
@@ -45,11 +45,12 @@ final class IntegerValidatorTests extends TestCase
 
     /**
      * @test
-     * @dataProvider InvalidIntegers 
+     * @dataProvider InvalidValues
      */
-    public function WhenInvalidInteger_ShouldBeString($value)
+    public function WhenNotSet_ShouldBeString()
     {
         // Arrange
+        $value = null;
   
         // Act
         $actual = $this->validator->ValidateField($value);
@@ -61,11 +62,11 @@ final class IntegerValidatorTests extends TestCase
     /**
      * @test
      */
-    public function WhenInvalidInteger_ShouldBeDefaultMessage()
+    public function WhenNotSet_ShouldBeDefaultMessage()
     {
         // Arrange
-        $value = "not an integer";
-        $expected = "Value must be an integer";
+        $value = null;
+        $expected = "This field is required";
         
         // Act
         $actual = $this->validator->ValidateField($value);
@@ -80,7 +81,7 @@ final class IntegerValidatorTests extends TestCase
     public function WhenReplacedMessage_ShouldBeExpectedMessage()
     {
         // Arrange
-        $value = "not an integer";
+        $value = null;
         $expected = "Replaced message";
         $args = [
             "message" => $expected
@@ -93,26 +94,28 @@ final class IntegerValidatorTests extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function ValidIntegers()
+    public function ValidValues()
     {
         return [
             [1],
-            ["1"],
-            [1234567],
-            [-1],
-            ["-1"]
+            [1.1],
+            [new DateTime()],
+            ["something"],
+            [true],
+            [false],
+            ["true"],
+            ["false"]
         ];
     }
 
-    public function InValidIntegers()
+    public function InvalidValues()
     {
         return [
-            [-1.121212],
-            [1.1],
-            ["1A"],
-            ["1 A"],
-            ["A1"],
-            [date()]
+            [null],
+            [],
+            [""],
+            [[]],
+            ["0"]
         ];
     }
 }

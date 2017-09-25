@@ -13,10 +13,9 @@ class ModelValidator implements IModelValidator
     }
 
     public function AddFieldValidator(
-        string $name,
         IFieldValidator $validator) : void
     {
-        $this->validators[$name] = $validator;
+        $this->validators[$validator->GetName()] = $validator;
     }
 
     public function Validate(
