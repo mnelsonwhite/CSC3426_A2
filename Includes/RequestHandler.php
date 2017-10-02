@@ -1,11 +1,16 @@
 <?php
 
 require_once("DbContext.php");
-require_once("Controller.php");
 require_once("WaterPoloSeedService.php");
+require_once("Controllers/GameController.php");
 
 class RequestHandler
 {
+    private $controllers = [
+        "game" => "GameController",
+        "home" => "HomeController"
+    ];
+
     // Prepare applciation request context
     public function Start()
     {
@@ -19,8 +24,6 @@ class RequestHandler
         $filedata = file_get_contents($ApplicationConfig["DB_SCHEMA_PATH"]);
         $dbSchema = json_decode($filedata, true);
         $dbContext = new DbContext($ApplicationConfig["DB_PATH"], $dbSchema);
-
-        $controller = new Controller();
 
         // Prepare object to seed database from CSV files
         $seedService = new WaterPoloSeedService(
@@ -38,15 +41,39 @@ class RequestHandler
         }
         
         // Build request context
-        $requestContext = [
+        $request = [
             "Query" => $_REQUEST ?? [],
             "Body" => $_BODY ?? [],
-            "Method" => $_SERVER["REQUEST_METHOD"] ?? "GET",
+            "Method" => strtolower($_SERVER["REQUEST_METHOD"] ?? "get"),
             "DbContext" => $dbContext
         ];
-        
-        // Process the request
-        $controller->Request($requestContext);
+
+        $request["Query"]["view"] = strtolower($request["Query"]["view"] ?? "default");
+        $request["Query"]["area"] = strtolower($request["Query"]["area"] ?? "home");
+
+        $controllerName = $this->controllers[$request["Query"]["area"]];
+        $controllerMethods = get_class_methods($controllerName);
+
+        $findMethod = strtolower($request["Query"]["view"]."_".$request["Method"]);
+        foreach($controllerMethods as $methodName)
+        {
+            if ($findMethod === strtolower($methodName))
+            {
+                $this->InitController(
+                    $request,
+                    $controllerName,
+                    $methodName);
+            }
+        }
+    }
+
+    private function InitController(
+        $request,
+        $controllerName,
+        $methodName)
+    {
+        $controller = new $controllerName($request);
+        $controller->$methodName(); 
     }
 }
 
