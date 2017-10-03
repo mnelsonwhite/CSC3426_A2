@@ -5,7 +5,7 @@ interface IModelValidator
     public function AddFieldValidator(
         IFieldValidator $validator) : void;
     public function Validate(
-        object $entityModel,
+        $entityModel,
         array $validationModel) : array;
 }
 

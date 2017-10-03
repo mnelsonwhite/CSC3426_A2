@@ -9,7 +9,12 @@ class ModelValidator implements IModelValidator
 
     public function __construct(array $validators)
     {
-        $this->validators = $validators ?? [];
+        $this->validators = [];
+        $validators = $validators ?? [];
+        foreach($validators as $validator)
+        {
+            $this->validators[$validator->GetName()] = $validator;
+        }
     }
 
     public function AddFieldValidator(
@@ -19,37 +24,45 @@ class ModelValidator implements IModelValidator
     }
 
     public function Validate(
-        object $entityModel,
+        $entityModel,
         array $validationModel) : array
     {
-        $result = [];
+        $results = [];
         // each property of entitymodel
         foreach($entityModel as $fieldName => $value)
         {
-            $validations = $validationModel[$fieldName];
-
-            if (isset($validations))
+            if (array_key_exists($fieldName, $validationModel))
             {
-                $result[$fieldName] = $this->ValidateField($validations, $value);
+                $validations = $validationModel[$fieldName];
+                $result = $this->ValidateField($validations, $value);
+                if (count($result) > 0)
+                {
+                    $results[$fieldName] = $result;
+                }
             }
         }
 
-        return $result;
+        return $results;
     }
 
     private function ValidateField(array $validations, $value) : array
     {
-        $result = [];
+        $results = [];
         foreach ($validations as $name => $args)
         {
-            $validator =$this->validators[$name]; 
-            if (isset($validator))
+            
+            if (array_key_exists($name, $this->validators))
             {
-                $result[] = $validator->ValidateField($value, $args);
+                $validator = $this->validators[$name];
+                $result = $validator->ValidateField($value, $args);
+                if ($result !== true)
+                {
+                    $results[] = $result;
+                }
             }
         }
 
-        return $result;
+        return $results;
     }
 }
 

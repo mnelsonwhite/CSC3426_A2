@@ -1,6 +1,7 @@
 <?php
 
 require_once("Models/GameEntity.php");
+require_once("Includes/ControllerBase.php");
 
 class GameController extends ControllerBase
 {
@@ -13,15 +14,49 @@ class GameController extends ControllerBase
 
     public function Add_Get()
     {
-        $this->View(null);
+        $this->View(new GameEntity());
     }
 
     public function Add_Post()
     {
+        $validationModel = [
+            "TeamAName" => [
+                "required" => []
+            ],
+            "TeamBName" => [
+                "required" => []
+            ],
+            "PoolName" => [
+                "required" => []
+            ],
+            "ScoreA" => [
+                "required" => [],
+                "integer" => []
+            ],
+            "ScoreB" => [
+                "required" => [],
+                "integer" => []
+            ],
+            "Date" => [
+                "required" => [],
+                "date" => [
+                    "format" => "Ymd"
+                ]
+            ]
+        ];
+
         $entity = $this->MapEntity(new GameEntity(), $this->request["Body"]);
+        $validationResult = $this->validator->Validate($entity, $validationModel);
+
+        if (count($validationResult) > 0)
+        {
+            return $this->View($entity, ["validation" => $validationResult], ["view" => "add", "method" => "get"]);
+        }
+
         $dbContext = $this->request["DbContext"];
         $entity->Id = $dbContext->Create($entity);
-        $this->View($entity);
+        
+        return $this->View($entity);
     }
 
     public function Delete_Get()
@@ -57,46 +92,6 @@ class GameController extends ControllerBase
         $dbContext = $this->request["DbContext"];
         $dbContext->Update($entity);
         $this->View($entity);
-    }
-}
-
-abstract class ControllerBase
-{
-    public $request;
-
-    public function __construct($request)
-    {
-        $this->request = $request;
-    }
-
-    public function MapEntity($entity, $data)
-    {
-        foreach($entity as $key=>$value)
-        {
-            if (isset($data[$key])) {
-                $entity->$key = $data[$key];    
-            }
-        }
-
-        return $entity;
-    }
-
-    public function View($model, $view = null, $area = null)
-    {
-        $area = $area ?? $this->request["Query"]["area"];
-        $view = $view ?? $this->request["Query"]["view"];
-        $method = $this->request["Method"];
-        
-        $viewfile = "Views";
-        
-        if (isset($area))
-        {
-            $viewfile = "$viewfile/$area";
-        }
-
-        $viewfile = "$viewfile/$view.$method.php";
-        
-        include("Views/Layout.php");
     }
 }
 

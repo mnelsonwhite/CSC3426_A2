@@ -26,7 +26,7 @@ class DateValidator extends FieldValidatorBase
 
     public function GetName() : string
     {
-        return "required";
+        return "date";
     }
 
     public function GetDefaultMessage() : string

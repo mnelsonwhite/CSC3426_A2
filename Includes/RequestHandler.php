@@ -4,6 +4,12 @@ require_once("DbContext.php");
 require_once("WaterPoloSeedService.php");
 require_once("Controllers/GameController.php");
 
+require_once("Includes/Validation/IModelValidator.php");
+require_once("Includes/Validation/ModelValidator.php");
+require_once("Includes/Validation/DateValidator.php");
+require_once("Includes/Validation/IntegerValidator.php");
+require_once("Includes/Validation/RequiredValidator.php");
+
 class RequestHandler
 {
     private $controllers = [
@@ -72,8 +78,20 @@ class RequestHandler
         $controllerName,
         $methodName)
     {
-        $controller = new $controllerName($request);
+        $controller = new $controllerName($request, $this->InitValidator());
         $controller->$methodName(); 
+    }
+
+    private function InitValidator() : IModelValidator
+    {
+        $fieldValidators = [
+            new DateValidator(),
+            new IntegerValidator(),
+            new RequiredValidator(),
+        ];
+        $modelValidator = new ModelValidator($fieldValidators);
+
+        return $modelValidator;
     }
 }
 
