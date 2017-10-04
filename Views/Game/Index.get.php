@@ -3,7 +3,7 @@ $baseUrl = "app.php?area=game";
 
 function editUrl($id, $baseUrl)
 {
-    return "$baseUrl&view=edit&id=$id";
+    return "$baseUrl&view=update&id=$id";
 }
 
 function deleteUrl($id, $baseUrl)
@@ -16,10 +16,7 @@ function addUrl($baseUrl)
     return "$baseUrl&view=add";
 }
 ?>
-<h1>
-    <span><?php print $this->request["Query"]["view"];?></span>
-    [<span><?php print $this->request["Method"];?></span>]
-</h1>
+<h2>Games Index</h2>
 <a href="<?php echo addUrl($baseUrl); ?>">Add</a>
 <table>
     <thead>
@@ -42,7 +39,7 @@ function addUrl($baseUrl)
             <td><?php echo $game->ScoreB; ?></td>
             <td><?php echo $game->Date; ?></td>
             <td>
-                <a href="<?php echo editUrl($game->Id, $baseUrl); ?>">edit</a>
+                <a href="<?php echo editUrl($game->Id, $baseUrl); ?>">update</a>
                 <a href="<?php echo deleteUrl($game->Id, $baseUrl); ?>">delete</a>
             </td>
         </tr>

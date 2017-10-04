@@ -1,0 +1,10 @@
+input {
+    border: 1px solid #ccc;
+}
+.validation-errors input{
+    border-color: red;
+}
+
+.validation-errors li, .validation-errors label {
+    color: red;
+}

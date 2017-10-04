@@ -21,9 +21,11 @@ class GameController extends ControllerBase
     {
         $validationModel = [
             "TeamAName" => [
+                "isTeamId" => [],
                 "required" => []
             ],
             "TeamBName" => [
+                "isTeamId" => [],
                 "required" => []
             ],
             "PoolName" => [
@@ -77,7 +79,7 @@ class GameController extends ControllerBase
         $this->View($entity);
     }
 
-    public function Edit_Get()
+    public function Update_Get()
     {
         $entity = new GameEntity();
         $entity->Id = $this->request["Query"]["id"];
@@ -86,12 +88,53 @@ class GameController extends ControllerBase
         $this->View($entity);
     }
 
-    public function Edit_Post()
+    public function Update_Post()
     {
+        $validationModel = [
+            "Id" => [
+                "isGameId" => [],
+                "required" => [],
+                "integer" => []
+            ],
+            "TeamAName" => [
+                "isTeamId" => [],
+                "required" => []
+            ],
+            "TeamBName" => [
+                "isTeamId" => [],
+                "required" => []
+            ],
+            "PoolName" => [
+                "required" => []
+            ],
+            "ScoreA" => [
+                "required" => [],
+                "integer" => []
+            ],
+            "ScoreB" => [
+                "required" => [],
+                "integer" => []
+            ],
+            "Date" => [
+                "required" => [],
+                "date" => [
+                    "format" => "Ymd"
+                ]
+            ]
+        ];
+
         $entity = $this->MapEntity(new GameEntity(), $this->request["Body"]);
+        $validationResult = $this->validator->Validate($entity, $validationModel);
+
+        if (count($validationResult) > 0)
+        {
+            return $this->View($entity, ["validation" => $validationResult], ["view" => "update", "method" => "get"]);
+        }
+
         $dbContext = $this->request["DbContext"];
         $dbContext->Update($entity);
-        $this->View($entity);
+        
+        return $this->View($entity);
     }
 }
 

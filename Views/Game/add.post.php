@@ -1,8 +1,5 @@
-<h1>
-    <span><?php print $this->request["Query"]["view"];?></span>
-    [<span><?php print $this->request["Method"];?></span>]
-</h1>
-<h2>Added new game</h2>
+<h2>Add Game</h2>
+<h3>Added new game</h3>
 <dl>
     <dt>Id</dt>
     <dd><?php echo $model->Id; ?></dd>

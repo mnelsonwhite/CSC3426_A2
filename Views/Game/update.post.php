@@ -1,8 +1,5 @@
-<h1>
-    <span><?php print $this->request["Query"]["view"];?></span>
-    [<span><?php print $this->request["Method"];?></span>]
-</h1>
-<h2>Edited exiting game</h2>
+<h2>Update Game</h2>
+<h3>Updated Game '<span><?php echo $model->Id; ?></span>'</h3>
 <dl>
     <dt>Id</dt>
     <dd><?php echo $model->Id; ?></dd>

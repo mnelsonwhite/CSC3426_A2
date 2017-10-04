@@ -1,14 +1,18 @@
 <?php
 
+require_once("ICrudRepository.php");
 require_once("DbContext.php");
 require_once("WaterPoloSeedService.php");
 require_once("Controllers/GameController.php");
+require_once("Controllers/HomeController.php");
 
 require_once("Includes/Validation/IModelValidator.php");
 require_once("Includes/Validation/ModelValidator.php");
 require_once("Includes/Validation/DateValidator.php");
 require_once("Includes/Validation/IntegerValidator.php");
 require_once("Includes/Validation/RequiredValidator.php");
+require_once("Includes/Validation/GameIdValidator.php");
+require_once("Includes/Validation/TeamIdValidator.php");
 
 class RequestHandler
 {
@@ -54,7 +58,7 @@ class RequestHandler
             "DbContext" => $dbContext
         ];
 
-        $request["Query"]["view"] = strtolower($request["Query"]["view"] ?? "default");
+        $request["Query"]["view"] = strtolower($request["Query"]["view"] ?? "index");
         $request["Query"]["area"] = strtolower($request["Query"]["area"] ?? "home");
 
         $controllerName = $this->controllers[$request["Query"]["area"]];
@@ -78,16 +82,20 @@ class RequestHandler
         $controllerName,
         $methodName)
     {
-        $controller = new $controllerName($request, $this->InitValidator());
+        $controller = new $controllerName(
+            $request,
+            $this->InitValidator($request["DbContext"]));
         $controller->$methodName(); 
     }
 
-    private function InitValidator() : IModelValidator
+    private function InitValidator(ICrudRepository $dbContext) : IModelValidator
     {
         $fieldValidators = [
             new DateValidator(),
             new IntegerValidator(),
             new RequiredValidator(),
+            new GameIdValidator($dbContext),
+            new TeamIdValidator($dbContext)
         ];
         $modelValidator = new ModelValidator($fieldValidators);
 

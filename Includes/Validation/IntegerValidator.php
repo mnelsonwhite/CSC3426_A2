@@ -18,7 +18,6 @@ class IntegerValidator extends FieldValidatorBase
     {
         return "Value must be an integer";
     }
-
 }
 
 ?>
