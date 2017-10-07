@@ -16,4 +16,4 @@
     <dt>Date</dt>
     <dd><?php echo $model->Date; ?></dd>
 </dl>
-<a href="app.php?area=game&view=index">Game Index</a>
+<a href="<?php echo $this->Url(["view" => "index"]); ?>">Game Index</a>

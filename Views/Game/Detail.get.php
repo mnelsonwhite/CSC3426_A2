@@ -1,5 +1,4 @@
-<h2>Delete Game</h2>
-<h3>Are you sure you want to delete?</h3>
+<h2>Game Detail</h2>
 <dl>
     <dt>Id</dt>
     <dd><?php echo $model->Id; ?></dd>
@@ -14,10 +13,6 @@
     <dt>Score B</dt>
     <dd><?php echo $model->ScoreB; ?></dd>
     <dt>Date</dt>
-    <dd><?php echo $model->Date; ?></dd>
+    <dd><?php echo $model->Date; ?></dd> 
 </dl>
-<form method="POST">
-    <input type="hidden" name="id" value="<?php echo $model->Id; ?>" />
-    <button type="submit">Confirm</button>
-    <a href="<?php echo $this->Url(["view" => "index"]); ?>">Cancel</a>
-</form>
+<a href="<?php echo $this->Url(["view" => "index" ]); ?>">Game Index</a>

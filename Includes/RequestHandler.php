@@ -4,6 +4,9 @@ require_once("ICrudRepository.php");
 require_once("DbContext.php");
 require_once("WaterPoloSeedService.php");
 require_once("Controllers/GameController.php");
+require_once("Controllers/PlayerController.php");
+require_once("Controllers/PoolController.php");
+require_once("Controllers/TeamController.php");
 require_once("Controllers/HomeController.php");
 
 require_once("Includes/Validation/IModelValidator.php");
@@ -13,12 +16,20 @@ require_once("Includes/Validation/IntegerValidator.php");
 require_once("Includes/Validation/RequiredValidator.php");
 require_once("Includes/Validation/GameIdValidator.php");
 require_once("Includes/Validation/TeamIdValidator.php");
+require_once("Includes/Validation/PoolIdValidator.php");
+require_once("Includes/Validation/PlayerIdValidator.php");
+require_once("Includes/Validation/HandedValidator.php");
+require_once("Includes/Validation/LengthValidator.php");
+
 
 class RequestHandler
 {
     private $controllers = [
         "game" => "GameController",
-        "home" => "HomeController"
+        "home" => "HomeController",
+        "player" => "PlayerController",
+        "pool" => "PoolController",
+        "team" => "TeamController"
     ];
 
     // Prepare applciation request context
@@ -55,7 +66,8 @@ class RequestHandler
             "Query" => $_REQUEST ?? [],
             "Body" => $_BODY ?? [],
             "Method" => strtolower($_SERVER["REQUEST_METHOD"] ?? "get"),
-            "DbContext" => $dbContext
+            "DbContext" => $dbContext,
+            "BaseUrl" => $ApplicationConfig["BASE_URL"]
         ];
 
         $request["Query"]["view"] = strtolower($request["Query"]["view"] ?? "index");
@@ -84,7 +96,8 @@ class RequestHandler
     {
         $controller = new $controllerName(
             $request,
-            $this->InitValidator($request["DbContext"]));
+            $this->InitValidator($request["DbContext"]),
+            $request["BaseUrl"]);
         $controller->$methodName(); 
     }
 
@@ -94,8 +107,12 @@ class RequestHandler
             new DateValidator(),
             new IntegerValidator(),
             new RequiredValidator(),
+            new HandedValidator(),
+            new LengthValidator(),
             new GameIdValidator($dbContext),
-            new TeamIdValidator($dbContext)
+            new TeamIdValidator($dbContext),
+            new PoolIdValidator($dbContext),
+            new PlayerIdValidator($dbContext)
         ];
         $modelValidator = new ModelValidator($fieldValidators);
 

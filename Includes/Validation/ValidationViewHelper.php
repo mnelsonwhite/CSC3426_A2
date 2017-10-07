@@ -11,9 +11,9 @@ class ValidationViewHelper
 
     public function Class(string $name)
     {
-        echo isset($this->validationResult)
+        return isset($this->validationResult)
             && array_key_exists($name, $this->validationResult)
-            ? "validation-errors" : null;
+            ? "validation-errors" : "";
     }
 
     public function Errors(string $name)
@@ -21,12 +21,12 @@ class ValidationViewHelper
         if(isset($this->validationResult)
         && array_key_exists($name, $this->validationResult))
         {
-            echo "<ul>";
+            $ul = "<ul>";
             foreach($this->validationResult[$name] as $error)
             {
-                echo "<li>".$error."</li>";
+                $ul = $ul."<li>".$error."</li>";
             }
-            echo "</ul>";
+            return $ul."</ul>";
         }
     }
 }

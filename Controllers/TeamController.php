@@ -1,22 +1,10 @@
 <?php
 
-require_once("Models/GameEntity.php");
+require_once("Models/TeamEntity.php");
 require_once("Includes/ControllerBase.php");
 
-class GameController extends ControllerBase
+class TeamController extends ControllerBase
 {
-    private function GetTeams()
-    {
-        $dbContext = $this->request["DbContext"];
-        $teams = [];
-        foreach($dbContext->ReadAll("TeamEntity") as $team)
-        {
-            $teams[$team->Name] = $team->Name;
-        }
-
-        return $teams;
-    }
-
     private function GetPools()
     {
         $dbContext = $this->request["DbContext"];
@@ -27,77 +15,52 @@ class GameController extends ControllerBase
         }
 
         return $pools;
-
     }
 
     public function Index_Get()
     {
         $dbContext = $this->request["DbContext"];
-        $entities = $dbContext->ReadAll("GameEntity");
+        $entities = $dbContext->ReadAll("TeamEntity");
         $this->View($entities);
     }
 
     public function Add_Get()
     {
         $viewbag = [
-            "Teams" => $this->GetTeams(),
             "Pools" => $this->GetPools()
         ];
-
-        $this->View(new GameEntity(), $viewbag);
+        $this->View(new TeamEntity(), $viewbag);
     }
 
     public function Add_Post()
     {
         $validationModel = [
-            "TeamAName" => [
-                "isTeamId" => [],
-                "required" => []
-            ],
-            "TeamBName" => [
-                "isTeamId" => [],
+            "Name" => [
                 "required" => []
             ],
             "PoolName" => [
                 "required" => [],
                 "isPoolId" => []
             ],
-            "ScoreA" => [
-                "required" => [],
-                "integer" => []
-            ],
-            "ScoreB" => [
-                "required" => [],
-                "integer" => []
-            ],
-            "Date" => [
-                "required" => [],
-                "date" => [
-                    "format" => "Ymd"
-                ],
-                "length" => [
-                    "eq" => 8
-                ],
-                "message" => "Must be 8 characters"
+            "Manager" => [
+                "required" => []
             ]
         ];
 
-        $entity = $this->MapEntity(new GameEntity(), $this->request["Body"]);
+        $entity = $this->MapEntity(new TeamEntity(), $this->request["Body"]);
         $validationResult = $this->validator->Validate($entity, $validationModel);
 
         if (count($validationResult) > 0)
         {
             $viewbag = [
-                "Teams" => $this->GetTeams(),
                 "Pools" => $this->GetPools(),
                 "validation" => $validationResult
             ];
-
             return $this->View($entity, $viewbag, ["view" => "add", "method" => "get"]);
         }
 
         $dbContext = $this->request["DbContext"];
-        $entity->Id = $dbContext->Create($entity);
+        $entity->Name = $dbContext->Create($entity);
         
         return $this->View($entity);
     }
@@ -105,21 +68,20 @@ class GameController extends ControllerBase
     public function Delete_Get()
     {
         $validationModel = [
-            "Id" => [
-                "isGameId" => [],
-                "required" => [],
-                "integer" => []
-            ],
+            "Name" => [
+                "isTeamId" => [],
+                "required" => []
+            ]
         ];
 
-        $entity = new GameEntity();
-        $entity->Id = $this->request["Query"]["id"];
+        $entity = new TeamEntity();
+        $entity->Name = $this->request["Query"]["id"];
 
         $validationResult = $this->validator->Validate($entity, $validationModel);
         
         if (count($validationResult) > 0)
         {
-            return $this->NotFound("Game with ID '$entity->Id' not found");
+            return $this->NotFound("Team with name '$entity->Name' not found");
         }
 
         $dbContext = $this->request["DbContext"];
@@ -130,20 +92,19 @@ class GameController extends ControllerBase
     public function Delete_Post()
     {
         $validationModel = [
-            "Id" => [
-                "isGameId" => [],
-                "required" => [],
-                "integer" => []
-            ],
+            "Name" => [
+                "isTeamId" => [],
+                "required" => []
+            ]
         ];
-        $entity = new GameEntity();
-        $entity->Id = $this->request["Query"]["id"];
+        $entity = new TeamEntity();
+        $entity->Name = $this->request["Query"]["id"];
 
         $validationResult = $this->validator->Validate($entity, $validationModel);
         
         if (count($validationResult) > 0)
         {
-            return $this->NotFound("Game with ID '$entity->Id' not found");
+            return $this->NotFound("Team with name '$entity->Name' not found");
         }
 
         $dbContext = $this->request["DbContext"];
@@ -154,26 +115,24 @@ class GameController extends ControllerBase
     public function Update_Get()
     {
         $validationModel = [
-            "Id" => [
-                "isGameId" => [],
-                "required" => [],
-                "integer" => []
-            ],
+            "Name" => [
+                "isTeamId" => [],
+                "required" => []
+            ]
         ];
-        $entity = new GameEntity();
-        $entity->Id = $this->request["Query"]["id"];
+
+        $viewbag = [
+            "Pools" => $this->GetPools()
+        ];
+        $entity = new TeamEntity();
+        $entity->Name = $this->request["Query"]["id"];
 
         $validationResult = $this->validator->Validate($entity, $validationModel);
         
         if (count($validationResult) > 0)
         {
-            return $this->NotFound("Game with ID '$entity->Id' not found");
+            return $this->NotFound("Team with name '$entity->Name' not found");
         }
-
-        $viewbag = [
-            "Teams" => $this->GetTeams(),
-            "Pools" => $this->GetPools()
-        ];
 
         $dbContext = $this->request["DbContext"];
         $entity = $dbContext->Read($entity);
@@ -183,54 +142,28 @@ class GameController extends ControllerBase
     public function Update_Post()
     {
         $validationModel = [
-            "Id" => [
-                "isGameId" => [],
+            "Name" => [
                 "required" => [],
-                "integer" => []
-            ],
-            "TeamAName" => [
-                "isTeamId" => [],
-                "required" => []
-            ],
-            "TeamBName" => [
-                "isTeamId" => [],
-                "required" => []
+                "isTeamId" => []
             ],
             "PoolName" => [
                 "required" => [],
                 "isPoolId" => []
             ],
-            "ScoreA" => [
-                "required" => [],
-                "integer" => []
-            ],
-            "ScoreB" => [
-                "required" => [],
-                "integer" => []
-            ],
-            "Date" => [
-                "required" => [],
-                "date" => [
-                    "format" => "Ymd"
-                ],
-                "length" => [
-                    "eq" => 8,
-                    "message" => "Must be 8 characters"
-                ],   
+            "Manager" => [
+                "required" => []
             ]
         ];
 
-        $entity = $this->MapEntity(new GameEntity(), $this->request["Body"]);
+        $entity = $this->MapEntity(new TeamEntity(), $this->request["Body"]);
         $validationResult = $this->validator->Validate($entity, $validationModel);
 
         if (count($validationResult) > 0)
         {
             $viewbag = [
-                "Teams" => $this->GetTeams(),
                 "Pools" => $this->GetPools(),
                 "validation" => $validationResult
             ];
-
             return $this->View($entity, $viewbag, ["view" => "update", "method" => "get"]);
         }
 
@@ -244,19 +177,18 @@ class GameController extends ControllerBase
     {
         $validationModel = [
             "Id" => [
-                "isGameId" => [],
-                "required" => [],
-                "integer" => []
+                "isTeamId" => [],
+                "required" => []
             ],
         ];
-        $entity = new GameEntity();
-        $entity->Id = $this->request["Query"]["id"];
+        $entity = new TeamEntity();
+        $entity->Name = $this->request["Query"]["id"];
 
         $validationResult = $this->validator->Validate($entity, $validationModel);
         
         if (count($validationResult) > 0)
         {
-            return $this->NotFound("Game with ID '$entity->Id' not found");
+            return $this->NotFound("Team with name '$entity->Name' not found");
         }
 
         $dbContext = $this->request["DbContext"];
