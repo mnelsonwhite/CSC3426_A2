@@ -76,11 +76,21 @@ abstract class ControllerBase
     {
         if (!$this->authenticationManager->IsAuthenticated())
         {
-            header('WWW-Authenticate: Basic realm="My Realm"');
+            header('WWW-Authenticate: Basic realm="WaterHockey"');
             header('HTTP/1.0 401 Unauthorized');
-            echo 'Authentication is REQUIRED';
+            include("Views/Unauthorized.php");
             exit;
         }
+    }
+
+    public function IsAuthenticated()
+    {
+        return $this->authenticationManager->IsAuthenticated();
+    }
+
+    public function UserName()
+    {
+        return $this->authenticationManager->UserName();
     }
 }
 

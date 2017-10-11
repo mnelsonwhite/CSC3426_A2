@@ -6,7 +6,7 @@ require_once("Models/PlayerEntity.php");
 require_once("Models/PoolEntity.php");
 require_once("Models/GameEntity.php");
 
-class WaterPoloSeedService
+class WaterHockeySeedService
 {
     private $repository;
     private $dbSchema;
@@ -99,7 +99,7 @@ class WaterPoloSeedService
                 $entity->Handed = $row[5];
                 $entity->GivenName = $row[2];
                 $entity->FamilyName = $row[3];
-                $entity->Dob = $row[4];
+                $entity->Dob = $this->FormatDate($row[4]);
                 $players[$key] = $entity;
             }
         }
@@ -137,7 +137,7 @@ class WaterPoloSeedService
             if(!isset($games[$key]))
             {
                 $entity = new GameEntity();
-                $entity->Date = $row[6];
+                $entity->Date = $this->FormatDate($row[6]);
                 $entity->PoolName = $row[4];
                 $entity->TeamAName = $row[0];
                 $entity->ScoreA = $row[1];
@@ -148,6 +148,12 @@ class WaterPoloSeedService
         }
         
         return $games;
+    }
+
+    private function FormatDate($date) : string
+    {
+        $date = DateTime::createFromFormat("Ymd", $date);
+        return $date->format("Y-m-d");
     }
 }
 

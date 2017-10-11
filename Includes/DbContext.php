@@ -1,6 +1,7 @@
 <?php
 
 require_once("DbInitializer.php");
+require_once("QueryFilter.php");
 require_once("ICrudRepository.php");
 
 class DbContext implements ICrudRepository
@@ -12,7 +13,7 @@ class DbContext implements ICrudRepository
     // SQLITE type mapping
     private $fieldTypeMap = [
         'TEXT' => SQLITE3_TEXT,
-        'INTEGER' => SQLITE3_TEXT
+        'INTEGER' => SQLITE3_INTEGER
     ];
     
     // @params:
@@ -63,6 +64,7 @@ class DbContext implements ICrudRepository
         if(!isset($this->dbHandle))
         {
             $this->dbHandle = new SQLite3($this->dbPath);
+            $this->dbHandle->exec('PRAGMA foreign_keys = ON;');
         }
 
         return $this->dbHandle;
@@ -121,8 +123,7 @@ class DbContext implements ICrudRepository
         }
 
         // construct generic insert query
-        $query = "INSERT INTO ".$tableName.
-            " (".implode(", ", $queryFieldBindings).
+        $query = "INSERT INTO $tableName (".implode(", ", $queryFieldBindings).
             ") VALUES (".implode(", ", $queryFields).");";
 
         error_log($query);
@@ -131,7 +132,7 @@ class DbContext implements ICrudRepository
         // bind all values to query
         foreach($fields as $fieldName=>$fieldType)
         {
-            $statement->bindValue(":".$fieldName, $entity->$fieldName, $this->fieldTypeMap[$fieldType]);
+            $statement->bindValue(":$fieldName", $entity->$fieldName, $this->fieldTypeMap[$fieldType]);
         }
 
         $statement->execute();
@@ -180,16 +181,15 @@ class DbContext implements ICrudRepository
         }
 
         // Build query string
-        $query = "UPDATE ".$tableName.
-            " SET ".implode(", ", $updateFieldBindings).
-            " WHERE ".$keyName."=:".$keyName.";";
+        $query = "UPDATE $tableName SET ".implode(", ", $updateFieldBindings).
+            " WHERE $keyName=:$keyName;";
 
         error_log($query);
         $statement = $this->GetDbHandle()->prepare($query);
 
         // bind query statement values
         $statement->bindValue(
-            ":".$keyName,
+            ":$keyName",
             $entity->$keyName,
             $this->fieldTypeMap[$keyType]);
         
@@ -198,7 +198,7 @@ class DbContext implements ICrudRepository
             if ($updateField != $keyName)
             {
                 $updateFieldType = $this->dbSchema[$tableName]['fields'][$updateField];
-                $statement->bindValue(":".$updateField, $entity->$updateField, $this->fieldTypeMap[$updateFieldType]);
+                $statement->bindValue(":$updateField", $entity->$updateField, $this->fieldTypeMap[$updateFieldType]);
             }
         }
 
@@ -216,13 +216,12 @@ class DbContext implements ICrudRepository
         $keyType = $this->dbSchema[$tableName]['fields'][$keyName];
         $id = $entity->$keyName;
 
-        $query = "DELETE FROM ".$tableName.
-            " WHERE ".$keyName."=:".$keyName.";";
+        $query = "DELETE FROM $tableName WHERE $keyName=:$keyName;";
 
         error_log($query);
         $statement = $this->GetDbHandle()->prepare($query);
         $statement->bindValue(
-            ":".$keyName,
+            ":$keyName",
             $id,
             $this->fieldTypeMap[$keyType]);
         $statement->execute();
@@ -240,14 +239,13 @@ class DbContext implements ICrudRepository
         $id = $entity->$keyName;
 
         $query = "SELECT ".implode(", ", $fields).
-            " FROM ".$tableName.
-            " WHERE ".$keyName."=:".$keyName.";";
+            " FROM $tableName WHERE $keyName=:$keyName;";
 
         error_log($query);
 
         $statement = $this->GetDbHandle()->prepare($query);
         $statement->bindValue(
-            ":".$keyName,
+            ":$keyName",
             $id,
             $this->fieldTypeMap[$keyType]);
         $result = $statement->execute()->fetchArray();
@@ -265,8 +263,9 @@ class DbContext implements ICrudRepository
         return $entity;
     }
 
-    public function ReadAll($entityName)
+    public function ReadAll($entityName, QueryFilter $filter = null)
     {
+        $filter = $filter ?? new QueryFilter();
         $tableName =  $this->GetTableNameFromEntityType($entityName);
         $fields = array_keys($this->dbSchema[$tableName]['fields']);
         $key = $this->dbSchema[$tableName]['key'];
@@ -274,10 +273,14 @@ class DbContext implements ICrudRepository
         $keyType = $this->dbSchema[$tableName]['fields'][$keyName];
         $isAutoIncrement = $key[$keyName];
 
+        
         $query = "SELECT ".implode(", ", $fields).
-            " FROM ".$tableName.";";
+            " FROM $tableName $filter;";
+
         error_log($query);
         $statement = $this->GetDbHandle()->prepare($query);
+        $filter->Bind($statement);
+
         $result = $statement->execute();
 
         $entityArray = [];
@@ -288,7 +291,7 @@ class DbContext implements ICrudRepository
             {
                 $entity->$fieldName = $resultArray[$fieldName];
             }
-            $entityArray[] = $entity;
+            $entityArray[$entity->$keyName] = $entity;
         }
 
         return $entityArray;

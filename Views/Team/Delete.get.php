@@ -9,7 +9,7 @@
     <dd><?php echo $model->Manager; ?></dd>
 </dl>
 <form method="POST">
-    <input type="hidden" name="id" value="<?php echo $model->Id; ?>" />
+    <input type="hidden" name="id" value="<?php echo $model->Name; ?>" />
     <button type="submit">Confirm</button>
     <a href="<?php echo $this->Url(["view" => "index" ]); ?>">Cancel</a>
 </form>

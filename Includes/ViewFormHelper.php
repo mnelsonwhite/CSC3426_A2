@@ -12,11 +12,16 @@ class ViewFormHelper
 
     public function TextInput($field, $display = null)
     {
+        return $this->Input($field, $display, "text");
+    }
+
+    public function Input($field, $display = null, $type)
+    {
         $display = $display ?? $field;
 
         $form = "<div class=\"form-group ".$this->validationHelper->Class($field)."\">";
         $form .= "<label>$display</label>";
-        $form .= "<input type=\"text\" name=\"$field\" placeholder=\"$display\" value=\"".$this->model->$field."\" />";
+        $form .= "<input type=\"$type\" name=\"$field\" placeholder=\"$display\" value=\"".$this->model->$field."\" />";
         $form .= $this->validationHelper->Errors($field);
         $form .= "</div>";
         return $form;

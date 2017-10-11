@@ -17,6 +17,7 @@
             <td><?php echo $entity->Length; ?></td>
             <td><?php echo $entity->Address; ?></td>
             <td>
+                <a href="<?php echo $this->Url(["view" => "detail", "id" => $entity->Name ]); ?>">detail</a>
                 <a href="<?php echo $this->Url(["view" => "update", "id" => $entity->Name ]); ?>">update</a>
                 <a href="<?php echo $this->Url(["view" => "delete", "id" => $entity->Name ]); ?>">delete</a>
             </td>

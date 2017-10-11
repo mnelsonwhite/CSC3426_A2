@@ -10,7 +10,7 @@ $f = new ViewFormHelper($v, $model);
     <?php echo $f->SelectInput("TeamName", $viewbag["Teams"], "Team Name"); ?>
     <?php echo $f->TextInput("GivenName", "Given Name"); ?>
     <?php echo $f->TextInput("FamilyName", "Family Name"); ?>
-    <?php echo $f->TextInput("Dob", "Date of Birth"); ?>
+    <?php echo $f->Input("Dob", "Date of Birth", "date"); ?>
     <?php echo $f->SelectInput("Handed", ["Left", "Right"]); ?>
     <button type="submit">Add</button>
     <a href="<?php echo $this->Url(["view" => "index" ]); ?>">Cancel</a>

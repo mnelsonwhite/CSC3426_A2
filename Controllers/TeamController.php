@@ -25,12 +25,15 @@ class TeamController extends ControllerBase
     public function Index_Get()
     {
         $dbContext = $this->request["DbContext"];
+        $pools = $dbContext->ReadAll("PoolEntity");
         $entities = $dbContext->ReadAll("TeamEntity");
-        $this->View($entities);
+        $this->View($entities, ["pools" => $pools]);
     }
 
     public function Add_Get()
     {
+        $this->RequireAuthentication();
+
         $viewbag = [
             "Pools" => $this->GetPools()
         ];
@@ -39,6 +42,8 @@ class TeamController extends ControllerBase
 
     public function Add_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Name" => [
                 "required" => []
@@ -72,6 +77,8 @@ class TeamController extends ControllerBase
 
     public function Delete_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Name" => [
                 "isTeamId" => [],
@@ -96,6 +103,8 @@ class TeamController extends ControllerBase
 
     public function Delete_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Name" => [
                 "isTeamId" => [],
@@ -119,6 +128,8 @@ class TeamController extends ControllerBase
 
     public function Update_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Name" => [
                 "isTeamId" => [],
@@ -146,6 +157,8 @@ class TeamController extends ControllerBase
 
     public function Update_Post()
     {
+        $this->RequireAuthentication();
+        
         $validationModel = [
             "Name" => [
                 "required" => [],
@@ -198,6 +211,21 @@ class TeamController extends ControllerBase
 
         $dbContext = $this->request["DbContext"];
         $dbContext->Read($entity);
+
+        $pool = new PoolEntity();
+        $pool->Name = $entity->PoolName;
+        $entity->Pool = $dbContext->Read($pool);
+
+        $entity->Players = $dbContext->ReadAll(
+            "PlayerEntity",
+            (new QueryFilter())->Eq("TeamName", $entity->Name));
+        
+        $entity->Games = $dbContext->ReadAll(
+            "GameEntity",
+            (new QueryFilter())
+                ->Eq("TeamAName", $entity->Name)
+                ->Or()
+                ->Eq("TeamBName", $entity->Name));
         $this->View($entity);
     }
 }

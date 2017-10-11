@@ -33,6 +33,7 @@
             <td><?php echo $entity->ScoreB; ?></td>
             <td><?php echo $entity->Date; ?></td>
             <td>
+                <a href="<?php echo $this->Url(["view" => "detail", "id" => $entity->Id ]); ?>">detail</a>
                 <a href="<?php echo $this->Url(["view" => "update", "id" => $entity->Id ]); ?>">update</a>
                 <a href="<?php echo $this->Url(["view" => "delete", "id" => $entity->Id ]); ?>">delete</a>
             </td>

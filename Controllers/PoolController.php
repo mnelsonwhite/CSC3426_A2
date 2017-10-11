@@ -19,11 +19,14 @@ class PoolController extends ControllerBase
 
     public function Add_Get()
     {
+        $this->RequireAuthentication();
         $this->View(new PoolEntity());
     }
 
     public function Add_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Length" => [
                 "required" => [],
@@ -50,6 +53,8 @@ class PoolController extends ControllerBase
 
     public function Delete_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Name" => [
                 "isPoolId" => [],
@@ -74,6 +79,8 @@ class PoolController extends ControllerBase
 
     public function Delete_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Name" => [
                 "isPoolId" => [],
@@ -97,6 +104,8 @@ class PoolController extends ControllerBase
 
     public function Update_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Name" => [
                 "isPoolId" => [],
@@ -120,6 +129,8 @@ class PoolController extends ControllerBase
 
     public function Update_Post()
     {
+        $this->RequireAuthentication();
+        
         $validationModel = [
             "Name" => [
                 "isPoolId" => [],

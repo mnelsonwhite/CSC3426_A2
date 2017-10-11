@@ -2,7 +2,7 @@
 
 require_once("ICrudRepository.php");
 require_once("DbContext.php");
-require_once("WaterPoloSeedService.php");
+require_once("WaterHockeySeedService.php");
 require_once("Controllers/GameController.php");
 require_once("Controllers/PlayerController.php");
 require_once("Controllers/PoolController.php");
@@ -47,7 +47,7 @@ class RequestHandler
         $dbContext = new DbContext($ApplicationConfig["DB_PATH"], $dbSchema);
 
         // Prepare object to seed database from CSV files
-        $seedService = new WaterPoloSeedService(
+        $seedService = new WaterHockeySeedService(
             $dbContext,
             $dbSchema,
             $ApplicationConfig["GAMESCSV_PATH"],

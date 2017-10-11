@@ -44,6 +44,8 @@ class GameController extends ControllerBase
 
     public function Add_Get()
     {
+        $this->RequireAuthentication();
+
         $viewbag = [
             "Teams" => $this->GetTeams(),
             "Pools" => $this->GetPools()
@@ -54,6 +56,8 @@ class GameController extends ControllerBase
 
     public function Add_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "TeamAName" => [
                 "isTeamId" => [],
@@ -78,17 +82,25 @@ class GameController extends ControllerBase
             "Date" => [
                 "required" => [],
                 "date" => [
-                    "format" => "Ymd"
+                    "format" => "Y-m-d",
+                    "message" => "Must be in yyyy-mm-dd format"
                 ],
                 "length" => [
-                    "eq" => 8
+                    "eq" => 10,
+                    "message" => "Must be 10 characters yyyy-mm-dd"
                 ],
-                "message" => "Must be 8 characters"
+                
             ]
         ];
 
         $entity = $this->MapEntity(new GameEntity(), $this->request["Body"]);
         $validationResult = $this->validator->Validate($entity, $validationModel);
+
+        if ($entity->TeamAName == $entity->TeamBName)
+        {
+            $validationResult["TeamAName"][] = "Must be different from Team B Name";
+            $validationResult["TeamBName"][] = "Must be different from Team A Name";
+        }
 
         if (count($validationResult) > 0)
         {
@@ -101,6 +113,7 @@ class GameController extends ControllerBase
             return $this->View($entity, $viewbag, ["view" => "add", "method" => "get"]);
         }
 
+        $entity->Date == DaetFormatter::HtmlToDb($entity->Date);
         $dbContext = $this->request["DbContext"];
         $entity->Id = $dbContext->Create($entity);
         
@@ -109,6 +122,8 @@ class GameController extends ControllerBase
 
     public function Delete_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Id" => [
                 "isGameId" => [],
@@ -134,6 +149,8 @@ class GameController extends ControllerBase
 
     public function Delete_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Id" => [
                 "isGameId" => [],
@@ -158,6 +175,8 @@ class GameController extends ControllerBase
 
     public function Update_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Id" => [
                 "isGameId" => [],
@@ -187,6 +206,8 @@ class GameController extends ControllerBase
 
     public function Update_Post()
     {
+        $this->RequireAuthentication();
+        
         $validationModel = [
             "Id" => [
                 "isGameId" => [],
@@ -216,17 +237,24 @@ class GameController extends ControllerBase
             "Date" => [
                 "required" => [],
                 "date" => [
-                    "format" => "Ymd"
+                    "format" => "Y-m-d",
+                    "mesage" => "Must be in yyyy-mm-dd format"
                 ],
                 "length" => [
-                    "eq" => 8,
-                    "message" => "Must be 8 characters"
+                    "eq" => 10,
+                    "message" => "Must be 10 characters yyyy-mm-dd"
                 ],   
             ]
         ];
 
         $entity = $this->MapEntity(new GameEntity(), $this->request["Body"]);
         $validationResult = $this->validator->Validate($entity, $validationModel);
+
+        if ($entity->TeamAName == $entity->TeamBName)
+        {
+            $validationResult["TeamAName"][] = "Must be different from Team B Name";
+            $validationResult["TeamBName"][] = "Must be different from Team A Name";
+        }
 
         if (count($validationResult) > 0)
         {

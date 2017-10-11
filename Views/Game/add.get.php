@@ -12,7 +12,7 @@ $f = new ViewFormHelper($v, $model);
     <?php echo $f->SelectInput("PoolName", $viewbag["Pools"], "Pool Name"); ?>
     <?php echo $f->TextInput("ScoreA", "Score A"); ?>
     <?php echo $f->TextInput("ScoreB", "Score B"); ?>
-    <?php echo $f->TextInput("Date", "Date"); ?>
+    <?php echo $f->Input("Date", "Date", "date"); ?>
     <button type="submit">Add</button>
     <a href="<?php echo $this->Url(["view" => "index"]); ?>">Cancel</a>
 </form>

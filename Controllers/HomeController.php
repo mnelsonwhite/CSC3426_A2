@@ -13,6 +13,17 @@ class HomeController extends ControllerBase
     {
         return $this->View(null);
     }
+
+    public function Login_Get()
+    {
+        $this->RequireAuthentication();
+        return $this->View(null, null, ["view" => "index"]);
+    }
+
+    public function Logout_Get()
+    {
+
+    }
 }
 
 ?>

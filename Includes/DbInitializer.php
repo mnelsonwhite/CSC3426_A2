@@ -61,7 +61,7 @@ class DbInitializer
         
         return "FOREIGN KEY (".$fieldName.
         ") REFERENCES ".$tableName.
-        "(".$key.")";
+        "(".$key.") ON DELETE CASCADE";
     }
 
     // return table field declaration

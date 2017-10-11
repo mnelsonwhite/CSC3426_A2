@@ -2,6 +2,7 @@
 
 require_once("Models/PlayerEntity.php");
 require_once("Includes/ControllerBase.php");
+require_once("Includes/QueryFilter.php");
 
 class PlayerController extends ControllerBase
 {
@@ -32,6 +33,8 @@ class PlayerController extends ControllerBase
 
     public function Add_Get()
     {
+        $this->RequireAuthentication();
+        
         $viewbag = [
             "Teams" => $this->GetTeams()
         ];
@@ -41,6 +44,8 @@ class PlayerController extends ControllerBase
 
     public function Add_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "TeamName" => [
                 "isTeamId" => [],
@@ -55,8 +60,13 @@ class PlayerController extends ControllerBase
             "Dob" => [
                 "required" => [],
                 "date" => [
-                    "format" => "Ymd"
-                ]
+                    "format" => "Y-m-d",
+                    "mesage" => "Must be in yyyy-mm-dd format"
+                ],
+                "length" => [
+                    "eq" => 10,
+                    "message" => "Must be 10 characters yyyy-mm-dd"
+                ],   
             ],
             "Handed" => [
                 "required" => [],
@@ -85,6 +95,8 @@ class PlayerController extends ControllerBase
 
     public function Delete_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Id" => [
                 "isPlayerId" => [],
@@ -110,6 +122,8 @@ class PlayerController extends ControllerBase
 
     public function Delete_Post()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Id" => [
                 "isPlayerId" => [],
@@ -134,6 +148,8 @@ class PlayerController extends ControllerBase
 
     public function Update_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
             "Id" => [
                 "isPlayerId" => [],
@@ -162,6 +178,8 @@ class PlayerController extends ControllerBase
 
     public function Update_Post()
     {
+        $this->RequireAuthentication();
+        
         $validationModel = [
             "Id" => [
                 "isPlayerId" => [],
@@ -181,8 +199,13 @@ class PlayerController extends ControllerBase
             "Dob" => [
                 "required" => [],
                 "date" => [
-                    "format" => "Ymd"
-                ]
+                    "format" => "Y-m-d",
+                    "mesage" => "Must be in yyyy-mm-dd format"
+                ],
+                "length" => [
+                    "eq" => 10,
+                    "message" => "Must be 10 characters yyyy-mm-dd"
+                ],   
             ],
             "Handed" => [
                 "required" => [],
