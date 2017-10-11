@@ -5,6 +5,11 @@ require_once("Includes/ControllerBase.php");
 
 class TeamController extends ControllerBase
 {
+    public function Initialise()
+    {
+        $this->title = "Teams";
+    }
+
     private function GetPools()
     {
         $dbContext = $this->request["DbContext"];

@@ -5,6 +5,11 @@ require_once("Includes/ControllerBase.php");
 
 class PlayerController extends ControllerBase
 {
+    public function Initialise()
+    {
+        $this->title = "Players";
+    }
+
     private function GetTeams()
     {
         $dbContext = $this->request["DbContext"];

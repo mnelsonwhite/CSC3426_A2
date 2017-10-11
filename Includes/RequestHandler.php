@@ -70,6 +70,8 @@ class RequestHandler
             "BaseUrl" => $ApplicationConfig["BASE_URL"]
         ];
 
+        $authManager = new AuthenticationManager($_SERVER);
+
         $request["Query"]["view"] = strtolower($request["Query"]["view"] ?? "index");
         $request["Query"]["area"] = strtolower($request["Query"]["area"] ?? "home");
 
@@ -84,7 +86,8 @@ class RequestHandler
                 $this->InitController(
                     $request,
                     $controllerName,
-                    $methodName);
+                    $methodName,
+                    $authManager);
             }
         }
     }
@@ -92,12 +95,14 @@ class RequestHandler
     private function InitController(
         $request,
         $controllerName,
-        $methodName)
+        $methodName,
+        $authManager)
     {
         $controller = new $controllerName(
             $request,
             $this->InitValidator($request["DbContext"]),
-            $request["BaseUrl"]);
+            $request["BaseUrl"],
+            $authManager);
         $controller->$methodName(); 
     }
 

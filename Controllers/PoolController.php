@@ -5,6 +5,11 @@ require_once("Includes/ControllerBase.php");
 
 class PoolController extends ControllerBase
 {
+    public function Initialise()
+    {
+        $this->title = "Pools";
+    }
+
     public function Index_Get()
     {
         $dbContext = $this->request["DbContext"];
