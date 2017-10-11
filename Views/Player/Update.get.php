@@ -1,9 +1,6 @@
 <?php
 require_once("Includes/Validation/ValidationViewHelper.php");
 require_once("Includes/ViewFormHelper.php");
-require_once("Includes/DateFormatter.php");
-
-$model->Dob = DateFormatter::DbToHtml($model->Dob);
 
 $v = new ValidationViewHelper($viewbag["validation"] ?? []);
 $f = new ViewFormHelper($v, $model);
