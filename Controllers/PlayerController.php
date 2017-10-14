@@ -90,7 +90,10 @@ class PlayerController extends ControllerBase
         $dbContext = $this->request["DbContext"];
         $entity->Id = $dbContext->Create($entity);
         
-        return $this->View($entity);
+        $this->Redirect([
+            "view" => "detail",
+            "id" => $entity->Id,
+            "method" => "get"]);
     }
 
     public function Delete_Get()
@@ -143,7 +146,10 @@ class PlayerController extends ControllerBase
 
         $dbContext = $this->request["DbContext"];
         $dbContext->Delete($entity);
-        $this->View($entity);
+        
+        $this->Redirect([
+            "view" => "index",
+            "method" => "get"]);
     }
 
     public function Update_Get()
@@ -229,7 +235,10 @@ class PlayerController extends ControllerBase
         $dbContext = $this->request["DbContext"];
         $dbContext->Update($entity);
         
-        return $this->View($entity);
+        $this->Redirect([
+            "view" => "detail",
+            "id" => $entity->Id,
+            "method" => "get"]);
     }
 
     public function Detail_Get()

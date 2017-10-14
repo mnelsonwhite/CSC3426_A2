@@ -16,5 +16,5 @@ $f = new ViewFormHelper($v, $model);
     <?php echo $f->SelectInput("PoolName", $viewbag["Pools"], "Pool Name"); ?>
     <?php echo $f->TextInput("Manager"); ?>
     <button type="submit">Update</button>
-    <a href="<?php echo $this->Url(["view" => "index"]); ?>">Pool Index</a>
+    <a href="<?php echo $this->Url(["view" => "index"]); ?>">Team Index</a>
 </form>

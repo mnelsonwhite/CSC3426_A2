@@ -1,18 +1,21 @@
-<h2>Team Detail</h2>
+<h2><?php echo $model->Name; ?> Team Detail</h2>
 <dl>
-    <dt>Name</dt>
-    <dd><?php echo $model->Name; ?></dd>
-    <dt>Pool Name</dt>
-    <dd><?php echo $model->PoolName; ?></dd>
-    <dt>Pool Address</dt>
-    <dd><?php echo $model->Pool->Address; ?></dd>
-    <dt>Pool Length</dt>
-    <dd><?php echo $model->Pool->Length; ?></dd>
     <dt>Manager</dt>
     <dd><?php echo $model->Manager; ?></dd>
 </dl>
 <a href="<?php echo $this->Url(["view" => "index"]); ?>">Index</a>
 <a href="<?php echo $this->Url(["view" => "update", "id" => $model->Name ]); ?>">Update</a>
+<a href="<?php echo $this->Url(["view" => "delete", "id" => $model->Name ]); ?>">Delete</a>
+<h2>Pool</h2>
+<dl>
+    <dt>Pool Name</dt>
+    <dd><?php echo $model->Pool->Name; ?></dd>
+    <dt>Pool Address</dt>
+    <dd><?php echo $model->Pool->Address; ?></dd>
+    <dt>Pool Length</dt>
+    <dd><?php echo $model->Pool->Length; ?></dd>
+</dl>
+
 <hr />
 <h2>Players</h2>
 <table>

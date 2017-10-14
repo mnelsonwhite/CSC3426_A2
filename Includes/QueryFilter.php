@@ -1,5 +1,9 @@
 <?php
-
+/*
+* A generic filter builder with fluent API.
+* Uses PDO binding for safe queries.
+* Automatic binding for integer and text.
+*/
 class QueryFilter
 {
     private $filter;

@@ -64,6 +64,12 @@ abstract class ControllerBase
         include("Views/Layout.php");
     }
 
+    public function Redirect($data)
+    {
+        $url = htmlspecialchars_decode($this->Url($data));
+        header("Location: $url", true, 301);
+    }
+
     public function Url($data)
     {
         $data["area"] = $data["area"] ?? $this->request["Query"]["area"];

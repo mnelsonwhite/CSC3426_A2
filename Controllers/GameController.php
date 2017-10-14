@@ -113,11 +113,13 @@ class GameController extends ControllerBase
             return $this->View($entity, $viewbag, ["view" => "add", "method" => "get"]);
         }
 
-        $entity->Date == DaetFormatter::HtmlToDb($entity->Date);
         $dbContext = $this->request["DbContext"];
         $entity->Id = $dbContext->Create($entity);
         
-        return $this->View($entity);
+        $this->Redirect([
+            "view" => "detail",
+            "id" => $entity->Id,
+            "method" => "get"]);
     }
 
     public function Delete_Get()
@@ -170,7 +172,10 @@ class GameController extends ControllerBase
 
         $dbContext = $this->request["DbContext"];
         $dbContext->Delete($entity);
-        $this->View($entity);
+        
+        $this->Redirect([
+            "view" => "index",
+            "method" => "get"]);
     }
 
     public function Update_Get()
@@ -270,7 +275,10 @@ class GameController extends ControllerBase
         $dbContext = $this->request["DbContext"];
         $dbContext->Update($entity);
         
-        return $this->View($entity);
+        $this->Redirect([
+            "view" => "detail",
+            "id" => $entity->Id,
+            "method" => "get"]);
     }
 
     public function Detail_Get()

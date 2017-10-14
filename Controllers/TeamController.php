@@ -29,6 +29,7 @@ class TeamController extends ControllerBase
         $entities = $dbContext->ReadAll("TeamEntity");
         $this->View($entities, ["pools" => $pools]);
     }
+    
 
     public function Add_Get()
     {
@@ -37,6 +38,7 @@ class TeamController extends ControllerBase
         $viewbag = [
             "Pools" => $this->GetPools()
         ];
+
         $this->View(new TeamEntity(), $viewbag);
     }
 
@@ -71,45 +73,20 @@ class TeamController extends ControllerBase
 
         $dbContext = $this->request["DbContext"];
         $entity->Name = $dbContext->Create($entity);
-        
-        return $this->View($entity);
+
+        $this->Redirect([
+            "view" => "detail",
+            "id" => $entity->Name,
+            "method" => "get"]);
     }
 
-    public function Delete_Get()
+    public function Detail_Get()
     {
-        $this->RequireAuthentication();
-
         $validationModel = [
-            "Name" => [
+            "Id" => [
                 "isTeamId" => [],
                 "required" => []
-            ]
-        ];
-
-        $entity = new TeamEntity();
-        $entity->Name = $this->request["Query"]["id"];
-
-        $validationResult = $this->validator->Validate($entity, $validationModel);
-        
-        if (count($validationResult) > 0)
-        {
-            return $this->NotFound("Team with name '$entity->Name' not found");
-        }
-
-        $dbContext = $this->request["DbContext"];
-        $entity = $dbContext->Read($entity);
-        $this->View($entity);
-    }
-
-    public function Delete_Post()
-    {
-        $this->RequireAuthentication();
-
-        $validationModel = [
-            "Name" => [
-                "isTeamId" => [],
-                "required" => []
-            ]
+            ],
         ];
         $entity = new TeamEntity();
         $entity->Name = $this->request["Query"]["id"];
@@ -122,7 +99,22 @@ class TeamController extends ControllerBase
         }
 
         $dbContext = $this->request["DbContext"];
-        $dbContext->Delete($entity);
+        $dbContext->Read($entity);
+
+        $pool = new PoolEntity();
+        $pool->Name = $entity->PoolName;
+        $entity->Pool = $dbContext->Read($pool);
+
+        $entity->Players = $dbContext->ReadAll(
+            "PlayerEntity",
+            (new QueryFilter())->Eq("TeamName", $entity->Name));
+        
+        $entity->Games = $dbContext->ReadAll(
+            "GameEntity",
+            (new QueryFilter())
+                ->Eq("TeamAName", $entity->Name)
+                ->Or()
+                ->Eq("TeamBName", $entity->Name));
         $this->View($entity);
     }
 
@@ -188,16 +180,47 @@ class TeamController extends ControllerBase
         $dbContext = $this->request["DbContext"];
         $dbContext->Update($entity);
         
-        return $this->View($entity);
+        $this->Redirect([
+            "view" => "detail",
+            "id" => $entity->Name,
+            "method" => "get"]);
     }
 
-    public function Detail_Get()
+    public function Delete_Get()
     {
+        $this->RequireAuthentication();
+
         $validationModel = [
-            "Id" => [
+            "Name" => [
                 "isTeamId" => [],
                 "required" => []
-            ],
+            ]
+        ];
+
+        $entity = new TeamEntity();
+        $entity->Name = $this->request["Query"]["id"];
+
+        $validationResult = $this->validator->Validate($entity, $validationModel);
+        
+        if (count($validationResult) > 0)
+        {
+            return $this->NotFound("Team with name '$entity->Name' not found");
+        }
+
+        $dbContext = $this->request["DbContext"];
+        $entity = $dbContext->Read($entity);
+        $this->View($entity);
+    }
+
+    public function Delete_Post()
+    {
+        $this->RequireAuthentication();
+
+        $validationModel = [
+            "Name" => [
+                "isTeamId" => [],
+                "required" => []
+            ]
         ];
         $entity = new TeamEntity();
         $entity->Name = $this->request["Query"]["id"];
@@ -210,23 +233,9 @@ class TeamController extends ControllerBase
         }
 
         $dbContext = $this->request["DbContext"];
-        $dbContext->Read($entity);
+        $entity = $dbContext->Delete($entity);
 
-        $pool = new PoolEntity();
-        $pool->Name = $entity->PoolName;
-        $entity->Pool = $dbContext->Read($pool);
-
-        $entity->Players = $dbContext->ReadAll(
-            "PlayerEntity",
-            (new QueryFilter())->Eq("TeamName", $entity->Name));
-        
-        $entity->Games = $dbContext->ReadAll(
-            "GameEntity",
-            (new QueryFilter())
-                ->Eq("TeamAName", $entity->Name)
-                ->Or()
-                ->Eq("TeamBName", $entity->Name));
-        $this->View($entity);
+        $this->Redirect(["view" => "index", "method" => "get"]);
     }
 }
 

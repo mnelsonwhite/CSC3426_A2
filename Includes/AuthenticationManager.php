@@ -11,7 +11,7 @@ class AuthenticationManager implements IAuthenticationManager
     private $server;
     // user, password hash dictionary
     private $users = [
-        "admin" => "28531336563e1f3883b87d858af447e561471bd7"
+        "admin" => "3b18a760e3f84432a5ee9b1fd70e8ce83371ae94d2b3e27374fa5633c02dad54"
     ];
     public function __construct($server)
     {
@@ -20,13 +20,10 @@ class AuthenticationManager implements IAuthenticationManager
 
     public function IsAuthenticated() : bool
     {
-        // $hasUser = isset($this->server['PHP_AUTH_USER']);
-        // $hasPassword = isset($this->server['PHP_AUTH_PW']);
-        
-        // if (!($hasUser && $hasPassword)) return false;
-        
         $user = strtolower($this->server['PHP_AUTH_USER'] ?? "");
-        $password = sha1($this->server['PHP_AUTH_PW'] ?? null);
+
+        // create password hash with username salt
+        $password = hash("sha256", $user.($this->server['PHP_AUTH_PW'] ?? null));
         $hasValidUser = array_key_exists($user, $this->users);
         
         if(!$hasValidUser) return false;
@@ -39,6 +36,4 @@ class AuthenticationManager implements IAuthenticationManager
         return $this->server['PHP_AUTH_USER'] ?? null;
     }
 }
-
-
 ?>
