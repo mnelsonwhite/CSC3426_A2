@@ -42,7 +42,7 @@ class GameController extends ControllerBase
         $this->View($entities);
     }
 
-    public function Add_Get()
+    public function Create_Get()
     {
         $this->RequireAuthentication();
 
@@ -54,7 +54,7 @@ class GameController extends ControllerBase
         $this->View(new GameEntity(), $viewbag);
     }
 
-    public function Add_Post()
+    public function Create_Post()
     {
         $this->RequireAuthentication();
 

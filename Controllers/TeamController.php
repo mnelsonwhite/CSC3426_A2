@@ -31,7 +31,7 @@ class TeamController extends ControllerBase
     }
     
 
-    public function Add_Get()
+    public function Create_Get()
     {
         $this->RequireAuthentication();
 
@@ -42,7 +42,7 @@ class TeamController extends ControllerBase
         $this->View(new TeamEntity(), $viewbag);
     }
 
-    public function Add_Post()
+    public function Create_Post()
     {
         $this->RequireAuthentication();
 

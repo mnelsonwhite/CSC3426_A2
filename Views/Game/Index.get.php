@@ -1,5 +1,5 @@
 <h2>Game Index</h2>
-<a href="<?php echo $this->Url(["view" => "add"]); ?>">Add</a>
+<a href="<?php echo $this->Url(["view" => "create"]); ?>">Create</a>
 <table>
     <thead>
     <tr>

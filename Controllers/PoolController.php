@@ -17,13 +17,13 @@ class PoolController extends ControllerBase
         $this->View($entities);
     }
 
-    public function Add_Get()
+    public function Create_Get()
     {
         $this->RequireAuthentication();
         $this->View(new PoolEntity());
     }
 
-    public function Add_Post()
+    public function Create_Post()
     {
         $this->RequireAuthentication();
 
