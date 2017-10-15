@@ -5,7 +5,7 @@ require_once("Includes/ViewFormHelper.php");
 $v = new ValidationViewHelper($viewbag["validation"] ?? []);
 $f = new ViewFormHelper($v, $model);
 ?>
-<h2>Update Pool</h2>
+<h1>Update Pool</h1>
 <form method="POST">
     <div class="form-group <?php echo $v->Class("Name"); ?>">
         <label>Name</label>
@@ -15,6 +15,5 @@ $f = new ViewFormHelper($v, $model);
     </div>
     <?php echo $f->TextInput("Length"); ?>
     <?php echo $f->TextInput("Address"); ?>
-    <button type="submit">Update</button>
-    <a href="<?php echo $this->Url(["view" => "index"]); ?>">Pool Index</a>
+    <button type="submit" class="btn">Update</button>
 </form>

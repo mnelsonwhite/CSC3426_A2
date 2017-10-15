@@ -1,4 +1,4 @@
-<h2>Delete Team</h2>
+<h1>Delete Team</h1>
 <h3>Are you sure you want to delete?</h3>
 <dl>
     <dt>Name</dt>

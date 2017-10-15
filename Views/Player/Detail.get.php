@@ -1,7 +1,5 @@
-<h2>Player Detail</h2>
+<h1>Player Detail</h1>
 <dl>
-    <dt>Id</dt>
-    <dd><?php echo $model->Id; ?></dd>
     <dt>Team Name</dt>
     <dd><?php echo $model->TeamName; ?></dd>
     <dt>Given Name</dt>
@@ -13,4 +11,3 @@
     <dt>Handed</dt>
     <dd><?php echo $model->Handed; ?></dd>
 </dl>
-<a href="<?php echo $this->Url(["view" => "index" ]); ?>">Player Index</a>

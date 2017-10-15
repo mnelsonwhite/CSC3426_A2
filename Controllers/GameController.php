@@ -110,15 +110,14 @@ class GameController extends ControllerBase
                 "validation" => $validationResult
             ];
 
-            return $this->View($entity, $viewbag, ["view" => "add", "method" => "get"]);
+            return $this->View($entity, $viewbag, ["view" => "create", "method" => "get"]);
         }
 
         $dbContext = $this->request["DbContext"];
         $entity->Id = $dbContext->Create($entity);
         
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Id,
+            "view" => "index",
             "method" => "get"]);
     }
 
@@ -276,8 +275,7 @@ class GameController extends ControllerBase
         $dbContext->Update($entity);
         
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Id,
+            "view" => "index",
             "method" => "get"]);
     }
 
