@@ -42,7 +42,9 @@ class PoolController extends ControllerBase
 
         if (count($validationResult) > 0)
         {
-            return $this->View($entity, ["validation" => $validationResult], ["view" => "add", "method" => "get"]);
+            return $this->View(
+                $entity,
+                ["validation" => $validationResult], ["view" => "create", "method" => "get"]);
         }
 
         $dbContext = $this->request["DbContext"];

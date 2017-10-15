@@ -110,7 +110,7 @@ class GameController extends ControllerBase
                 "validation" => $validationResult
             ];
 
-            return $this->View($entity, $viewbag, ["view" => "add", "method" => "get"]);
+            return $this->View($entity, $viewbag, ["view" => "create", "method" => "get"]);
         }
 
         $dbContext = $this->request["DbContext"];

@@ -1,12 +1,23 @@
+* {
+    box-sizing:border-box;
+}
+
 input {
     border: 1px solid #ccc;
 }
-.validation-errors input{
-    border-color: red;
+
+.validation-errors ul {
+    padding: 0;
+    margin: 3pt 0 0 0;
+    width: auto;
+    list-style:none;
+    white-space: nowrap;
 }
 
-.validation-errors li, .validation-errors label {
-    color: red;
+.validation-errors li {
+    color: #fd3d1e;
+    text-transform: uppercase;
+    font-size: 0.8em;
 }
 
 body {
@@ -18,13 +29,16 @@ body {
 }
 
 .main-container {
-    padding: 40px;
+    padding: 40pt;
 }
 
 .landing-feature {
     background-color: #327a6f;
     border-radius: 20pt;
     padding: 30pt;
+    max-width: 350pt;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 a {
@@ -58,6 +72,7 @@ select, button, a {
 }
 
 h1, h2, h3, h4 {
+    margin-top: 0;
     font-family: "Arial Black", "Arial Bold", sans-serif;
     color: white;
 }
@@ -112,9 +127,9 @@ ul.nav a {
     transition: border 0.3s, color 0.3s;
 }
 
-ul.nav a:hover, ul.nav a:active  {
+ul.nav a:hover, ul.nav a:focus  {
     color: white;
-    border-bottom: 5px solid white;
+    border-bottom: 3px solid white;
 }
 
 ul.nav li.selected a {
@@ -123,7 +138,7 @@ ul.nav li.selected a {
 
 table.data-table {
     border-collapse: collapse;
-    margin-top: 20pt;
+    margin: 20pt 0 20pt 0;
     color: black;
 }
 
@@ -186,6 +201,10 @@ input, select, dd {
     background-color: white;
     margin: 0;
     line-height: 22pt;
+}
+
+input:focus, select:focus {
+    outline: none;
 }
 
 dd {
