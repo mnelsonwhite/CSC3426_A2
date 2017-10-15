@@ -1,6 +1,6 @@
-<h2>Pool Index</h2>
-<a href="<?php echo $this->Url(["view" => "create"]); ?>">Create</a>
-<table>
+<h1>Pool Index</h1>
+<a href="<?php echo $this->Url(["view" => "create"]); ?>" class="btn" title="Create Pool">Create Pool</a>
+<table class="data-table">
     <thead>
     <tr>
         <th>Name</th>
@@ -9,7 +9,7 @@
     </tr>
     </thead>
     <?php foreach($model as $entity): ?>
-    <tr onclick="document.location = '<?php echo $this->Url(["view" => "detail", "id" => $entity->Name]); ?>';">
+    <tr onclick="document.location = '<?php echo $this->Url(["view" => "detail", "id" => $entity->Name]); ?>';" title="Update">
             <td>
             <?php echo $entity->Name; ?>
             </td>

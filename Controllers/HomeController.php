@@ -11,18 +11,7 @@ class HomeController extends ControllerBase
 
     public function Index_Get()
     {
-        return $this->View(null);
-    }
-
-    public function Login_Get()
-    {
-        $this->RequireAuthentication();
-        return $this->View(null, null, ["view" => "index"]);
-    }
-
-    public function Logout_Get()
-    {
-
+        $this->Redirect(["area"=> "team"]);
     }
 }
 

@@ -1,6 +1,6 @@
-<h2>Player Index</h2>
-<a href="<?php echo $this->Url(["view" => "create" ]); ?>">Create</a>
-<table>
+<h1>Player Index</h1>
+<a href="<?php echo $this->Url(["view" => "create" ]); ?>" class="btn" title="Create Player">Create Player</a>
+<table class="data-table">
     <thead>
     <tr>
         <th>Team Name</th>
@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <?php foreach($model as $entity): ?>
-    <tr onclick="document.location = '<?php echo $this->Url(["view" => "detail", "id" => $entity->Id]); ?>';">
+    <tr onclick="document.location = '<?php echo $this->Url(["view" => "update", "id" => $entity->Id]); ?>';" title="Update">
             <td><?php echo $entity->TeamName; ?></td>
             <td><?php echo $entity->GivenName; ?></td>
             <td><?php echo $entity->FamilyName; ?></td>

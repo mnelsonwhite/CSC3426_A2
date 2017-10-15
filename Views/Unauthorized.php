@@ -6,6 +6,6 @@
     <title>Water Hockey - 401 Unauthorized</title>
     <body>
     <h1>401</h1>
-    <h2>Unauthorized</h2>
+    <h1>Unauthorized</h1>
     </body>
 </html>

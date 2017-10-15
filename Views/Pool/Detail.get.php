@@ -1,4 +1,4 @@
-<h2>Pool Detail</h2>
+<h1>Pool Detail</h1>
 <dl>
     <dt>Name</dt>
     <dd><?php echo $model->Name; ?></dd>

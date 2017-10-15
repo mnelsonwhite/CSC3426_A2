@@ -1,4 +1,4 @@
-<h2>Game Detail</h2>
+<h1>Game Detail</h1>
 <dl>
     <dt>Id</dt>
     <dd><?php echo $model->Id; ?></dd>

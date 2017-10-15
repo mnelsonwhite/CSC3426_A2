@@ -1,4 +1,4 @@
-<h2>Delete Player</h2>
+<h1>Delete Player</h1>
 <h3>Are you sure you want to delete?</h3>
 <dl>
     <dt>Id</dt>
