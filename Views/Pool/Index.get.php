@@ -9,7 +9,7 @@
     </tr>
     </thead>
     <?php foreach($model as $entity): ?>
-    <tr onclick="document.location = '<?php echo $this->Url(["view" => "detail", "id" => $entity->Name]); ?>';" title="Update">
+    <tr onclick="document.location = '<?php echo $this->Url(["view" => "update", "id" => $entity->Name]); ?>';" title="Update">
             <td>
             <?php echo $entity->Name; ?>
             </td>

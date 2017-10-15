@@ -75,8 +75,7 @@ class TeamController extends ControllerBase
         $entity->Name = $dbContext->Create($entity);
 
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Name,
+            "view" => "index",
             "method" => "get"]);
     }
 
@@ -181,8 +180,7 @@ class TeamController extends ControllerBase
         $dbContext->Update($entity);
         
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Name,
+            "view" => "index",
             "method" => "get"]);
     }
 

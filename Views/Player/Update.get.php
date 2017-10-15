@@ -14,7 +14,7 @@ $f = new ViewFormHelper($v, $model);
     <?php echo $f->SelectInput("TeamName", $viewbag["Teams"], "Team Name"); ?>
     <?php echo $f->TextInput("GivenName", "Given Name"); ?>
     <?php echo $f->TextInput("FamilyName", "Family Name"); ?>
-    <?php echo $f->TextInput("Dob", "Date of Birth", "date"); ?>
+    <?php echo $f->Input("Dob", "Date of Birth", "date"); ?>
     <?php echo $f->SelectInput("Handed", ["Left" => "Left", "Right" => "Right"]); ?>
     <button type="submit" class="btn">Update</button>
 </form>

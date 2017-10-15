@@ -1,7 +1,5 @@
 <h1>Game Detail</h1>
 <dl>
-    <dt>Id</dt>
-    <dd><?php echo $model->Id; ?></dd>
     <dt>Team A Name</dt>
     <dd><?php echo $model->TeamAName; ?></dd>
     <dt>Team B Name</dt>
@@ -15,4 +13,3 @@
     <dt>Date</dt>
     <dd><?php echo $model->Date; ?></dd> 
 </dl>
-<a href="<?php echo $this->Url(["view" => "index" ]); ?>">Game Index</a>

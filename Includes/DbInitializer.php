@@ -42,6 +42,8 @@ class DbInitializer
         $query = "CREATE TABLE IF NOT EXISTS ".$tableName.
             " (".implode(", ", $fieldDeclr).");";
 
+        error_log($query);
+        
         try
         {
             $statement = $this->dbHandle->prepare($query);

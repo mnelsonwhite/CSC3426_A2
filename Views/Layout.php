@@ -17,7 +17,6 @@ function MenuItem($areaName, $areaDescription, $thisContext)
     <title>Water Hockey - <?php echo $this->title; ?></title>
     <body>
         <div class="nav-bar">
-            <a href="app.php" class="nav-title" title="Home">Water Hockey</a>
             <ul class="nav">
                 <?php echo  MenuItem("team", "Teams", $this); ?>
                 <?php echo  MenuItem("game", "Games", $this); ?>

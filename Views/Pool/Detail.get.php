@@ -7,4 +7,3 @@
     <dt>Address</dt>
     <dd><?php echo $model->Address; ?></dd>
 </dl>
-<a href="<?php echo $this->Url(["view" => "index"]); ?>">Pool Index</a>

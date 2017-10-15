@@ -26,6 +26,7 @@ body {
     cursor: default;
     padding: 0;
     margin: 0;
+    height: 100%;
 }
 
 .main-container {
@@ -37,8 +38,10 @@ body {
     border-radius: 20pt;
     padding: 30pt;
     max-width: 350pt;
-    margin-left: auto;
-    margin-right: auto;
+    height: 230pt;
+    margin: auto;
+    top: 0; left: 0; bottom: 0; right: 0;
+    position: absolute;
 }
 
 a {
@@ -86,14 +89,6 @@ h2 {
     font-size: 2em;
 }
 
-.nav-title {
-    display: inline-block;
-    color: white;
-    font-weight: bold;
-    font-size: 1.5em;
-    margin-bottom: 10pt;
-}
-
 .nav-bar {
     display: inline-block;
     padding: 30pt;
@@ -122,6 +117,7 @@ ul.nav:not(:last-child)
 
 ul.nav a {
     color: #f7b733;
+    text-transform: uppercase;
     font-weight: bold;
     font-size: 1.5em;
     transition: border 0.3s, color 0.3s;
@@ -140,6 +136,7 @@ table.data-table {
     border-collapse: collapse;
     margin: 20pt 0 20pt 0;
     color: black;
+    width: 100%;
 }
 
 table.data-table td {
@@ -168,10 +165,12 @@ table.data-table>tbody tr:nth-child(odd) {
 
 table.data-table>tbody tr {
     cursor: pointer;
+    color: black;
 }
 
 table.data-table>tbody tr:hover {
     background-color: white;
+    color: black;
 }
 
 form, dl {
@@ -186,8 +185,9 @@ form, dl {
 
 label, dt {
     display: block;
-    font-weight: bold;
+    font-weight: normal;
     margin-bottom: 5pt;
+    color: white;
 }
 
 input, select, dd {

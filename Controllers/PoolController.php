@@ -51,8 +51,7 @@ class PoolController extends ControllerBase
         $entity->Name = $dbContext->Create($entity);
         
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Id,
+            "view" => "index",
             "method" => "get"]);
     }
 
@@ -163,8 +162,7 @@ class PoolController extends ControllerBase
         $dbContext->Update($entity);
         
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Id,
+            "view" => "index",
             "method" => "get"]);
     }
 

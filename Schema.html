@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- common scripts and styles -->
+    <link rel="stylesheet" href="Styles/Common.css" />
+    <link rel="stylesheet" href="Styles/Schema.css" />
+    </head>
+    <title>CSC3426 Assignment 2 [SID: 0050055011]</title>
+    <body>
+        <div class="main-container">
+            <h1>Water Hockey DB Schema</h1>
+<h2>Pools Table</h2>
+<pre class="schema">
+<span class="highlight">CREATE TABLE IF NOT EXISTS</span> pools (
+    Name <span class="highlight">TEXT PRIMARY KEY</span>,
+    Length <span class="highlight">INTEGER</span>,
+    Address <span class="highlight">TEXT</span>);
+</pre>
+<h2>Teams Table</h2>
+<pre class="schema">
+<span class="highlight">CREATE TABLE IF NOT EXISTS</span> teams (
+    Name <span class="highlight">TEXT PRIMARY KEY</span>,
+    PoolName <span class="highlight">TEXT</span>,
+    Manager <span class="highlight">TEXT</span>,
+    <span class="highlight">FOREIGN KEY</span> (PoolName) <span class="highlight">REFERENCES</span> pools(Name) <span class="highlight">ON DELETE CASCADE</span>);
+</pre>
+<h2>Games Table</h2>
+<pre class="schema">
+<span class="highlight">CREATE TABLE IF NOT EXISTS</span> games (
+    Id <span class="highlight">INTEGER PRIMARY KEY AUTOINCREMENT</span>,
+    TeamAName <span class="highlight">TEXT</span>,
+    TeamBName <span class="highlight">TEXT</span>,
+    PoolName <span class="highlight">TEXT</span>,
+    ScoreA <span class="highlight">INTEGER</span>,
+    ScoreB <span class="highlight">INTEGER</span>,
+    Date <span class="highlight">TEXT</span>,
+    <span class="highlight">FOREIGN KEY</span> (TeamAName) <span class="highlight">REFERENCES</span> teams(Name) <span class="highlight">ON DELETE CASCADE</span>,
+    <span class="highlight">FOREIGN KEY</span> (TeamBName) <span class="highlight">REFERENCES</span> teams(Name) <span class="highlight">ON DELETE CASCADE</span>,
+    <span class="highlight">FOREIGN KEY</span> (PoolName) <span class="highlight">REFERENCES</span> pools(Name) <span class="highlight">ON DELETE CASCADE</span>);
+</pre>
+<h2>Players Table</h2>
+<pre class="schema">
+<span class="highlight">CREATE TABLE IF NOT EXISTS</span> players (
+    Id <span class="highlight">INTEGER PRIMARY KEY AUTOINCREMENT</span>,
+    TeamName <span class="highlight">TEXT</span>,
+    GivenName <span class="highlight">TEXT</span>,
+    FamilyName <span class="highlight">TEXT</span>,
+    Dob <span class="highlight">TEXT</span>,
+    Handed <span class="highlight">TEXT</span>,
+    <span class="highlight">FOREIGN KEY</span> (TeamName) <span class="highlight">REFERENCES</span> teams(Name) <span class="highlight">ON DELETE CASCADE</span>);
+</pre>
+        </div>
+    </body>
+</html>

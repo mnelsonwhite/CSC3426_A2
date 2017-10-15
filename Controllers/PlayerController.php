@@ -91,8 +91,7 @@ class PlayerController extends ControllerBase
         $entity->Id = $dbContext->Create($entity);
         
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Id,
+            "view" => "index",
             "method" => "get"]);
     }
 
@@ -236,8 +235,7 @@ class PlayerController extends ControllerBase
         $dbContext->Update($entity);
         
         $this->Redirect([
-            "view" => "detail",
-            "id" => $entity->Id,
+            "view" => "index",
             "method" => "get"]);
     }
 
