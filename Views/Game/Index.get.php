@@ -1,3 +1,4 @@
+
 <h2>Game Index</h2>
 <a href="<?php echo $this->Url(["view" => "create"]); ?>">Create</a>
 <table>
@@ -9,34 +10,16 @@
         <th>Score A</th>
         <th>Score B</th>
         <th>Date</th>
-        <th></th>
     </tr>
     </thead>
     <?php foreach($model as $entity): ?>
-        <tr>
-            <td>
-                <a href="<?php echo $this->Url(["view" => "detail", "area" => "team", "id" => $entity->TeamAName ]); ?>">
-                    <?php echo $entity->TeamAName; ?>
-                </a>
-            </td>
-            <td>
-                <a href="<?php echo $this->Url(["view" => "detail", "area" => "team", "id" => $entity->TeamBName ]); ?>">
-                    <?php echo $entity->TeamBName; ?>
-                </a>
-            </td>
-            <td>
-                <a href="<?php echo $this->Url(["view" => "detail", "area" => "pool", "id" => $entity->PoolName ]); ?>">
-                    <?php echo $entity->PoolName; ?>
-                </a>
-            </td>
+        <tr onclick="document.location = '<?php echo $this->Url(["view" => "detail", "id" => $entity->Id]); ?>';">
+            <td><?php echo $entity->TeamAName; ?></td>
+            <td><?php echo $entity->TeamBName; ?></td>
+            <td><?php echo $entity->PoolName; ?></td>
             <td><?php echo $entity->ScoreA; ?></td>
             <td><?php echo $entity->ScoreB; ?></td>
             <td><?php echo $entity->Date; ?></td>
-            <td>
-                <a href="<?php echo $this->Url(["view" => "detail", "id" => $entity->Id ]); ?>">detail</a>
-                <a href="<?php echo $this->Url(["view" => "update", "id" => $entity->Id ]); ?>">update</a>
-                <a href="<?php echo $this->Url(["view" => "delete", "id" => $entity->Id ]); ?>">delete</a>
-            </td>
         </tr>
     <?php endforeach; ?>
     <tbody>
