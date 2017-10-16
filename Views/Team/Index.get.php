@@ -10,6 +10,7 @@
         <th>Pool Length</th>
     </tr>
     </thead>
+    <tbody>
     <?php foreach($model as $entity): ?>
     <tr onclick="document.location = '<?php echo $this->Url(["view" => "detail", "id" => $entity->Name]); ?>';" title="Update">
             <td><?php echo $entity->Name; ?></td>
@@ -19,6 +20,5 @@
             <td><?php echo $viewbag["pools"][$entity->PoolName]->Length ?></td>
         </tr>
     <?php endforeach; ?>
-    <tbody>
     </tbody>
 </table>

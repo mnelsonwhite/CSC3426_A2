@@ -38,7 +38,7 @@ body {
     border-radius: 20pt;
     padding: 30pt;
     max-width: 350pt;
-    height: 230pt;
+    height: 250pt;
     margin: auto;
     top: 0; left: 0; bottom: 0; right: 0;
     position: absolute;
@@ -78,6 +78,14 @@ h1, h2, h3, h4 {
     margin-top: 0;
     font-family: "Arial Black", "Arial Bold", sans-serif;
     color: white;
+    margin-bottom: 30pt;
+}
+
+.view-container h1,
+.view-container h2,
+.view-container h3,
+.view-container h4 {
+    border-bottom:  3px solid white;
 }
 
 h1 {
@@ -209,4 +217,9 @@ input:focus, select:focus {
 
 dd {
     margin-bottom: 15pt;
+}
+
+.indent {
+    margin-left: 20pt;
+    box-sizing:border-box;
 }

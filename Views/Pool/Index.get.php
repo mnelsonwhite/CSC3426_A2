@@ -8,6 +8,7 @@
         <th>Address</th>
     </tr>
     </thead>
+    <tbody>
     <?php foreach($model as $entity): ?>
     <tr onclick="document.location = '<?php echo $this->Url(["view" => "update", "id" => $entity->Name]); ?>';" title="Update">
             <td>
@@ -17,6 +18,5 @@
             <td><?php echo $entity->Address; ?></td>
         </tr>
     <?php endforeach; ?>
-    <tbody>
     </tbody>
 </table>

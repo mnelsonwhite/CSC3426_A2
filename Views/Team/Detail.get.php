@@ -28,6 +28,7 @@
         <th>Handed</th>
     </tr>
     </thead>
+    <tbody>
     <?php foreach($model->Players as $entity): ?>
     <tr onclick="document.location = '<?php echo $this->Url(["area" => "player", "view" => "update", "id" => $entity->Id]); ?>';" title="Edit">
             <td><?php echo $entity->GivenName; ?></td>
@@ -36,7 +37,6 @@
             <td><?php echo $entity->Handed; ?></td>
         </tr>
     <?php endforeach; ?>
-    <tbody>
     </tbody>
 </table>
 
@@ -53,6 +53,7 @@
         <th>Date</th>
     </tr>
     </thead>
+    <tbody>
     <?php foreach($model->Games as $entity): ?>
         <tr onclick="document.location = '<?php echo $this->Url(["area" => "game", "view" => "update", "id" => $entity->Id]); ?>';" title="Edit">
             <td><?php echo $entity->TeamAName; ?></td>
@@ -63,6 +64,5 @@
             <td><?php echo $entity->Date; ?></td>
         </tr>
     <?php endforeach; ?>
-    <tbody>
     </tbody>
 </table>
