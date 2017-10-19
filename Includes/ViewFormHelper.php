@@ -37,11 +37,11 @@ class ViewFormHelper
         $form .= "<select name=\"$field\" >";
         
         $selected = $selectedValue == null ? "selected" : "";
-        $form .= "<option $selected>Select one...</option>";
+        $form .= "<option $selected value>Select one...</option>";
 
         foreach($options as $value=>$text)
         {
-            $selected = $value == $selectedValue ? "selected" : "";
+            $selected = $value === $selectedValue ? "selected" : "";
             $form .= "<option $selected value=\"$value\">$text</option>";
         }
 

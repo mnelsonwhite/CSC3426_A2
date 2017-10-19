@@ -1,0 +1,12 @@
+Order Deny,Allow
+Deny from all
+
+<Files /App.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<FilesMatch ".*\.(css|js|html)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
