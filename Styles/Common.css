@@ -223,3 +223,7 @@ dd {
     margin-left: 20pt;
     box-sizing:border-box;
 }
+
+input:disabled {
+    background-color: #ccc;
+}

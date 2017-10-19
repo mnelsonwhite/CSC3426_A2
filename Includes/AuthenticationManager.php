@@ -9,9 +9,10 @@ interface IAuthenticationManager
 class AuthenticationManager implements IAuthenticationManager
 {
     private $server;
+    
     // user, password hash dictionary
     private $users = [
-        "admin" => "57aa393bc3b6970bad38e438ceda7c43d7f8e97a7945ce13f8e98fe736e12179"
+        "admin" => "3b18a760e3f84432a5ee9b1fd70e8ce83371ae94d2b3e27374fa5633c02dad54"
     ];
     public function __construct($server)
     {

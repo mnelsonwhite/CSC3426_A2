@@ -53,8 +53,9 @@ class RequestHandler
             $ApplicationConfig["GAMESCSV_PATH"],
             $ApplicationConfig["TEAMSCSV_PATH"]);
 
-        // Create and seed database if config variable is true
-        if(($ApplicationConfig["SEED_DATABASE"] ?? "false") === "true")
+        // Create and seed database if the database file does not exist
+        if ($ApplicationConfig["DB_PATH"] === ":memory:"
+            || !file_exists($ApplicationConfig["DB_PATH"]))
         {
             error_log("Seeding database");
             $dbContext->Initialize();
