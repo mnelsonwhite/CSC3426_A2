@@ -1,0 +1,59 @@
+input {
+    border: 1px solid #ccc;
+}
+
+.validation-errors ul {
+    padding: 0;
+    margin: 3pt 0 0 0;
+    width: auto;
+    list-style:none;
+    white-space: nowrap;
+}
+
+.validation-errors li {
+    color: #fd3d1e;
+    text-transform: uppercase;
+    font-size: 0.8em;
+}
+
+form, dl {
+    margin-top: 40pt;
+    max-width: 300pt;
+}
+
+.form-group {
+    position: relative;
+    margin: 5pt 0 15pt 0;
+}
+
+label, dt {
+    display: block;
+    font-weight: normal;
+    margin-bottom: 5pt;
+    color: black;
+}
+
+input, select, dd {
+    box-sizing:border-box;
+    padding: 4pt;
+    border: none;
+    width: 100%;
+    display: block;
+    height: 30pt;
+    border-radius: 3pt;
+    background-color: white;
+    margin: 0;
+    line-height: 22pt;
+}
+
+input:focus, select:focus {
+    outline: none;
+}
+
+dd {
+    margin-bottom: 15pt;
+}
+
+input:disabled {
+    background-color: #ccc;
+}

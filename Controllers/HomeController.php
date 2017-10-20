@@ -11,6 +11,7 @@ class HomeController extends ControllerBase
 
     public function Index_Get()
     {
+        // Redirect to the team index
         $this->Redirect(["area"=> "team"]);
     }
 }

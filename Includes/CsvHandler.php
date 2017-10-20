@@ -4,6 +4,7 @@ interface ICsvHandler
     public function GetAllRecords($filePath);
 }
 
+// Handler for CSV file parsing
 class CsvHandler implements ICsvHandler
 {
     public function GetAllRecords($filePath)

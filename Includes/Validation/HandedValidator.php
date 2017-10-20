@@ -2,6 +2,7 @@
 
 require_once("FieldValidatorBase.php");
 
+// Validate value as either Left or Right
 class HandedValidator extends FieldValidatorBase
 {
     public function IsValid($value, array $args) : bool

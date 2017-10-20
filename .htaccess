@@ -1,0 +1,20 @@
+# htaccess basic auth using htaccess does not suit
+# this application. Since the assignment spec does
+# not specify the method using auth scripts instead.
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+# turn off indexes
+Options -Indexes
+
+# implicit deny and expplicit allow
+Order Deny,Allow
+Deny from all
+
+# only allow the entry point application script
+<Files App.php>
+    Allow from all
+</Files>
+
+# allow all css, js and html files
+<FilesMatch ".*\.(css|js|html)$">
+    Allow from all
+</FilesMatch>

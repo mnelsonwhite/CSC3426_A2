@@ -6,9 +6,13 @@ interface IAuthenticationManager
     public function UserName() : string;
 }
 
+// Authentication Manager implementation
+// Currently uses static array for user/password persistence
+// Can easily implement database user persistence.
 class AuthenticationManager implements IAuthenticationManager
 {
     private $server;
+    
     // user, password hash dictionary
     private $users = [
         "admin" => "3b18a760e3f84432a5ee9b1fd70e8ce83371ae94d2b3e27374fa5633c02dad54"
@@ -23,12 +27,12 @@ class AuthenticationManager implements IAuthenticationManager
         $user = strtolower($this->server['PHP_AUTH_USER'] ?? "");
 
         // create password hash with username salt
-        $password = hash("sha256", $user.($this->server['PHP_AUTH_PW'] ?? null));
+        $passwordHash = hash("sha256", $user.($this->server['PHP_AUTH_PW'] ?? null));
         $hasValidUser = array_key_exists($user, $this->users);
         
         if(!$hasValidUser) return false;
 
-        return $this->users[$user] === $password;
+        return $this->users[$user] === $passwordHash;
     }
 
     public function UserName() : string 

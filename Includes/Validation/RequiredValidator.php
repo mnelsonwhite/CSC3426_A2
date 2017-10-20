@@ -2,6 +2,7 @@
 
 require_once("FieldValidatorBase.php");
 
+// Validates that the value exists
 class RequiredValidator extends FieldValidatorBase
 {
     public function IsValid($value, array $args) : bool
