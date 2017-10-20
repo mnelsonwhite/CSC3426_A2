@@ -6,6 +6,7 @@ require_once("Models/PlayerEntity.php");
 require_once("Models/PoolEntity.php");
 require_once("Models/GameEntity.php");
 
+// Seed the database with data from the CSV files
 class WaterHockeySeedService
 {
     private $repository;
@@ -63,9 +64,7 @@ class WaterHockeySeedService
         return $csvData;
     }
 
-    // 0 - Name
-    // 1 - Manager
-    // 6 - PoolName
+    // Get Team entities from data
     private function GetTeams($data)
     {
         $teams = [];
@@ -85,6 +84,7 @@ class WaterHockeySeedService
         return $teams;
     }
 
+    // Get player entities from data
     private function GetPlayers($data)
     {
         $players = [];
@@ -107,6 +107,7 @@ class WaterHockeySeedService
         return $players;
     }
 
+    // Get pool entities from data
     private function GetPools($data)
     {
         $pools = [];
@@ -127,6 +128,7 @@ class WaterHockeySeedService
         return $pools;
     }
 
+    // Get game entities from data
     private function GetGames($data)
     {
         $games = [];
@@ -150,6 +152,7 @@ class WaterHockeySeedService
         return $games;
     }
 
+    // Format Date to same as HTML date input for ease of use
     private function FormatDate($date) : string
     {
         $date = DateTime::createFromFormat("Ymd", $date);

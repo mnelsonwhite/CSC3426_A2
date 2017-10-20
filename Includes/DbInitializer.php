@@ -2,6 +2,8 @@
 
 require_once("DependencyGraphResolver.php");
 
+// Create database tables according to the configured schema
+// in correct dependency order
 class DbInitializer
 {
     private $dbHandle;

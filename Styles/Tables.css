@@ -1,0 +1,40 @@
+table.data-table {
+    border-collapse: collapse;
+    margin: 20pt 0 20pt 0;
+    color: black;
+    width: 100%;
+}
+
+table.data-table td {
+    margin: none;
+}
+
+table.data-table>thead {
+    background-color: #f7b733;
+    color: white;
+    
+}
+
+table.data-table>thead th {
+    font-weight: bold;
+    text-align: left;
+    padding: 10pt;
+}
+
+table.data-table>tbody td{
+    padding: 10pt;
+}
+
+table.data-table>tbody tr:nth-child(odd) {
+    background-color: #49b19c;
+}
+
+table.data-table>tbody tr {
+    cursor: pointer;
+    color: black;
+}
+
+table.data-table>tbody tr:hover {
+    background-color: white;
+    color: black;
+}

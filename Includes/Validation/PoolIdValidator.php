@@ -4,6 +4,7 @@ require_once("FieldValidatorBase.php");
 require_once("Includes/ICrudRepository.php");
 require_once("Models/PoolEntity.php");
 
+// Validate the value as an existing pool entity ID
 class PoolIdValidator extends FieldValidatorBase
 {
     private $dbContext;

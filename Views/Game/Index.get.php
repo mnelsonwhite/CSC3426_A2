@@ -12,6 +12,7 @@
         <th>Date</th>
     </tr>
     </thead>
+    <tbody>
     <?php foreach($model as $entity): ?>
         <tr onclick="document.location = '<?php echo $this->Url(["view" => "update", "id" => $entity->Id]); ?>';" title="Update">
             <td><?php echo $entity->TeamAName; ?></td>
@@ -22,6 +23,5 @@
             <td><?php echo $entity->Date; ?></td>
         </tr>
     <?php endforeach; ?>
-    <tbody>
     </tbody>
 </table>

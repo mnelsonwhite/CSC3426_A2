@@ -1,5 +1,7 @@
 <?php
-
+// Create a dependency graph of database tables
+// Resolve the graph to get the order by which
+// tables or entities must be added to the database
 class DependencyGraphResolver
 {
     public function GetDependencyOrder($dbSchema)

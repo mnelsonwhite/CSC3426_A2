@@ -4,6 +4,7 @@ require_once("Includes/ViewFormHelper.php");
 
 $v = new ValidationViewHelper($viewbag["validation"] ?? []);
 $f = new ViewFormHelper($v, $model);
+
 ?>
 <h1>Update Game</h1>
 <form method="POST">

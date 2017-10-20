@@ -15,6 +15,7 @@ class ViewFormHelper
         return $this->Input($field, $display, "text");
     }
 
+    // Creat HTML string for input form element
     public function Input($field, $display = null, $type)
     {
         $display = $display ?? $field;
@@ -27,6 +28,7 @@ class ViewFormHelper
         return $form;
     }
 
+    // Create HTML string for select form element
     public function SelectInput($field, $options, $display = null)
     {
         $display = $display ?? $field;
@@ -37,11 +39,11 @@ class ViewFormHelper
         $form .= "<select name=\"$field\" >";
         
         $selected = $selectedValue == null ? "selected" : "";
-        $form .= "<option $selected>Select one...</option>";
+        $form .= "<option $selected value>Select one...</option>";
 
         foreach($options as $value=>$text)
         {
-            $selected = $value == $selectedValue ? "selected" : "";
+            $selected = $value === $selectedValue ? "selected" : "";
             $form .= "<option $selected value=\"$value\">$text</option>";
         }
 

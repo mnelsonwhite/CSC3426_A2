@@ -2,6 +2,7 @@
 
 require_once("FieldValidatorBase.php");
 
+// Validate string is a date in a valid format
 class DateValidator extends FieldValidatorBase
 {
     public function IsValid($value, array $args) : bool

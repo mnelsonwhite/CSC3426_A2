@@ -8,8 +8,8 @@
         <div class="landing-feature">
             <h1>
                 404 Not Found
-                <br /><?php echo $message; ?>
             </h1>
+            <h3><?php echo $message; ?></h3>
         </div>
     </body>
 </html>

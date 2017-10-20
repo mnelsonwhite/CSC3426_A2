@@ -7,7 +7,7 @@
 </dl>
 
 <h2>Pool</h2>
-<a class="btn" href="<?php echo $this->Url(["view" => "updatepool", "id" => $model->Pool->Name ]); ?>">Update Team Pool</a>
+<a class="btn" href="<?php echo $this->Url(["view" => "update", "area" => "pool", "id" => $model->Pool->Name ]); ?>">Update Team Pool</a>
 <dl>
     <dt>Pool Name</dt>
     <dd><?php echo $model->Pool->Name; ?></dd>
@@ -18,7 +18,7 @@
 </dl>
 
 <h2>Players</h2>
-<a class="btn" href="<?php echo $this->Url(["view" => "createplayer", "id" => $model->Name ]); ?>">Create Team Player</a>
+<a class="btn" href="<?php echo $this->Url(["view" => "create", "area" => "player" ]); ?>">Create Player</a>
 <table class="data-table">
     <thead>
     <tr>
@@ -28,6 +28,7 @@
         <th>Handed</th>
     </tr>
     </thead>
+    <tbody>
     <?php foreach($model->Players as $entity): ?>
     <tr onclick="document.location = '<?php echo $this->Url(["area" => "player", "view" => "update", "id" => $entity->Id]); ?>';" title="Edit">
             <td><?php echo $entity->GivenName; ?></td>
@@ -36,12 +37,11 @@
             <td><?php echo $entity->Handed; ?></td>
         </tr>
     <?php endforeach; ?>
-    <tbody>
     </tbody>
 </table>
 
 <h2>Games</h2>
-<a class="btn" href="<?php echo $this->Url(["view" => "creategame", "id" => $model->Name ]); ?>">Create Team Game</a>
+<a class="btn" href="<?php echo $this->Url(["view" => "create", "area" => "team" ]); ?>">Create Game</a>
 <table class="data-table">
     <thead>
     <tr>
@@ -53,6 +53,7 @@
         <th>Date</th>
     </tr>
     </thead>
+    <tbody>
     <?php foreach($model->Games as $entity): ?>
         <tr onclick="document.location = '<?php echo $this->Url(["area" => "game", "view" => "update", "id" => $entity->Id]); ?>';" title="Edit">
             <td><?php echo $entity->TeamAName; ?></td>
@@ -63,6 +64,5 @@
             <td><?php echo $entity->Date; ?></td>
         </tr>
     <?php endforeach; ?>
-    <tbody>
     </tbody>
 </table>

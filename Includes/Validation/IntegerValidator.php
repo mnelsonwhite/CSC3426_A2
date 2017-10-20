@@ -2,6 +2,7 @@
 
 require_once("FieldValidatorBase.php");
 
+// Validates value as a integer
 class IntegerValidator extends FieldValidatorBase
 {
     public function IsValid($value, array $args) : bool

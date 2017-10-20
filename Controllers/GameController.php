@@ -3,13 +3,17 @@
 require_once("Models/GameEntity.php");
 require_once("Includes/ControllerBase.php");
 
+// Game entity views
 class GameController extends ControllerBase
 {
     public function Initialise()
     {
+        // Set page title for all views
+        // in this controller
         $this->title = "Games";
     }
 
+    // Get an array of teams for form select elements
     private function GetTeams()
     {
         $dbContext = $this->request["DbContext"];
@@ -22,6 +26,7 @@ class GameController extends ControllerBase
         return $teams;
     }
 
+    // Get an array of pool for form select elements
     private function GetPools()
     {
         $dbContext = $this->request["DbContext"];
@@ -32,9 +37,9 @@ class GameController extends ControllerBase
         }
 
         return $pools;
-
     }
 
+    // Get all game entities to view index
     public function Index_Get()
     {
         $dbContext = $this->request["DbContext"];
@@ -42,6 +47,7 @@ class GameController extends ControllerBase
         $this->View($entities);
     }
 
+    // View to create new game entity
     public function Create_Get()
     {
         $this->RequireAuthentication();
@@ -54,6 +60,10 @@ class GameController extends ControllerBase
         $this->View(new GameEntity(), $viewbag);
     }
 
+    // Method to receive posted new game entity
+    // validate and persist in database.
+    // Will either display validation errors or
+    // redirect to the index view
     public function Create_Post()
     {
         $this->RequireAuthentication();
@@ -96,6 +106,7 @@ class GameController extends ControllerBase
         $entity = $this->MapEntity(new GameEntity(), $this->request["Body"]);
         $validationResult = $this->validator->Validate($entity, $validationModel);
 
+        // Do not allow both teams to be the same
         if ($entity->TeamAName == $entity->TeamBName)
         {
             $validationResult["TeamAName"][] = "Must be different from Team B Name";
@@ -104,13 +115,18 @@ class GameController extends ControllerBase
 
         if (count($validationResult) > 0)
         {
+            // put teams and pools into the viewbag
+            // so that the create view can work
             $viewbag = [
                 "Teams" => $this->GetTeams(),
                 "Pools" => $this->GetPools(),
                 "validation" => $validationResult
             ];
 
-            return $this->View($entity, $viewbag, ["view" => "create", "method" => "get"]);
+            return $this->View(
+                $entity,
+                $viewbag,
+                ["view" => "create", "method" => "get"]);
         }
 
         $dbContext = $this->request["DbContext"];
@@ -121,6 +137,7 @@ class GameController extends ControllerBase
             "method" => "get"]);
     }
 
+    // View to delete a game entity
     public function Delete_Get()
     {
         $this->RequireAuthentication();
@@ -148,6 +165,7 @@ class GameController extends ControllerBase
         $this->View($entity);
     }
 
+    // Method to delete posted game entity by ID
     public function Delete_Post()
     {
         $this->RequireAuthentication();
@@ -159,6 +177,7 @@ class GameController extends ControllerBase
                 "integer" => []
             ],
         ];
+
         $entity = new GameEntity();
         $entity->Id = $this->request["Query"]["id"];
 
@@ -177,6 +196,7 @@ class GameController extends ControllerBase
             "method" => "get"]);
     }
 
+    // View to update a game entity
     public function Update_Get()
     {
         $this->RequireAuthentication();
@@ -208,6 +228,7 @@ class GameController extends ControllerBase
         $this->View($entity, $viewbag);
     }
 
+    // Method to update a game entity
     public function Update_Post()
     {
         $this->RequireAuthentication();
