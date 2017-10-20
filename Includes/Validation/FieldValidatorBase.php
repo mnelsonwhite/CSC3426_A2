@@ -4,7 +4,6 @@ require_once("IFieldValidator.php");
 
 abstract class FieldValidatorBase implements IFieldValidator
 {
-
     public abstract function GetName() : string;
     public abstract function IsValid($value, array $args) : bool;
     public abstract function GetDefaultMessage() : string;

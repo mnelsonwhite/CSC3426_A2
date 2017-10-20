@@ -4,6 +4,7 @@ require_once("FieldValidatorBase.php");
 require_once("Includes/ICrudRepository.php");
 require_once("Models/PlayerEntity.php");
 
+// Validate the value as an existing player entity ID
 class PlayerIdValidator extends FieldValidatorBase
 {
     private $dbContext;

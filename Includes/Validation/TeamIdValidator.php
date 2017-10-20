@@ -4,6 +4,7 @@ require_once("FieldValidatorBase.php");
 require_once("Includes/ICrudRepository.php");
 require_once("Models/TeamEntity.php");
 
+// Validate the value as an existing team entity ID
 class TeamIdValidator extends FieldValidatorBase
 {
     private $dbContext;

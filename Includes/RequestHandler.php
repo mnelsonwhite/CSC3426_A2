@@ -24,6 +24,7 @@ require_once("Includes/Validation/LengthValidator.php");
 
 class RequestHandler
 {
+    // map for area names and controllers
     private $controllers = [
         "game" => "GameController",
         "home" => "HomeController",
@@ -71,17 +72,29 @@ class RequestHandler
             "BaseUrl" => $ApplicationConfig["BASE_URL"]
         ];
 
+        // construct authentication manager
         $authManager = new AuthenticationManager($_SERVER);
 
-        $request["Query"]["view"] = strtolower($request["Query"]["view"] ?? "index");
+        // default views and areas
+        $request["Query"]["view"] = strtolower($request["Query"]["view"] ?? "Index");
         $request["Query"]["area"] = strtolower($request["Query"]["area"] ?? "home");
 
-        $controllerName = $this->controllers[$request["Query"]["area"]];
+        // Find controller for area
+        $controllerName = $this->controllers[$request["Query"]["area"]] ?? null;
+
+        // If cannot find controller registration NOT FOUND
+        if ($controllerName == null)
+        {
+            $message = "Area '".$request["Query"]["area"]."' is not registered";
+            $this->NotFound($message);
+        }
+
         $controllerMethods = get_class_methods($controllerName);
 
         $findMethod = strtolower($request["Query"]["view"]."_".$request["Method"]);
         foreach($controllerMethods as $methodName)
         {
+            // Init controller when method found
             if ($findMethod === strtolower($methodName))
             {
                 $this->InitController(
@@ -89,8 +102,15 @@ class RequestHandler
                     $controllerName,
                     $methodName,
                     $authManager);
+                die();
             }
         }
+        // If no controller method found then NOT FOUND
+        $message = "View '".$request["Query"]["view"]
+            ."' for method '".$request["Method"]
+            ."' cannot be found in controller.";
+            
+        $this->NotFound($message);
     }
 
     private function InitController(
@@ -105,6 +125,13 @@ class RequestHandler
             $request["BaseUrl"],
             $authManager);
         $controller->$methodName(); 
+    }
+
+    private function NotFound($message)
+    {
+        http_response_code(404);
+        include("Views/NotFound.php");
+        die();
     }
 
     private function InitValidator(ICrudRepository $dbContext) : IModelValidator

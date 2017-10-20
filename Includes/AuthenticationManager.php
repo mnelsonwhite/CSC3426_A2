@@ -6,6 +6,9 @@ interface IAuthenticationManager
     public function UserName() : string;
 }
 
+// Authentication Manager implementation
+// Currently uses static array for user/password persistence
+// Can easily implement database user persistence.
 class AuthenticationManager implements IAuthenticationManager
 {
     private $server;

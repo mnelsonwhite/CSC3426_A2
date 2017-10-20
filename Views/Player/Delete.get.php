@@ -1,8 +1,6 @@
 <h1>Delete Player</h1>
 <h3>Are you sure you want to delete?</h3>
 <dl>
-    <dt>Id</dt>
-    <dd><?php echo $model->Id; ?></dd>
     <dt>Team Name</dt>
     <dd><?php echo $model->TeamName; ?></dd>
     <dt>Given Name</dt>

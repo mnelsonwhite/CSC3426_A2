@@ -1,5 +1,6 @@
 <?php
 
+// Helper class to aide views with validation results
 class ValidationViewHelper
 {
     private $validationResult;

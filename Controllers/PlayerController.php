@@ -11,10 +11,12 @@ class PlayerController extends ControllerBase
         $this->title = "Players";
     }
 
+    // Get an array of teams for form select elements
     private function GetTeams()
     {
         $dbContext = $this->request["DbContext"];
         $teams = [];
+
         foreach($dbContext->ReadAll("TeamEntity") as $team)
         {
             $teams[$team->Name] = $team->Name;
@@ -70,7 +72,7 @@ class PlayerController extends ControllerBase
             ],
             "Handed" => [
                 "required" => [],
-                "hand" => []
+                "isHand" => []
             ]
         ];
 
@@ -214,7 +216,7 @@ class PlayerController extends ControllerBase
             ],
             "Handed" => [
                 "required" => [],
-                "hand" => []
+                "isHand" => []
             ]
         ];
 

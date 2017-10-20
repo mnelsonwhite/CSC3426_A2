@@ -3,6 +3,8 @@
 require_once("Includes/Validation/IModelValidator.php");
 require_once("Includes/AuthenticationManager.php");
 
+// Abstract controller class to be implemented by specific
+// entity controllers
 abstract class ControllerBase
 {
     public $request;

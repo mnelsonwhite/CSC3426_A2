@@ -2,6 +2,9 @@
 
 require_once("FieldValidatorBase.php");
 
+// Validates string length to be equal to (eq)
+// greater than (gt) or less than (lt) an integer
+// length
 class LengthValidator extends FieldValidatorBase
 {
     public function IsValid($value, array $args) : bool

@@ -4,6 +4,8 @@ require_once("DbInitializer.php");
 require_once("QueryFilter.php");
 require_once("ICrudRepository.php");
 
+// Automatical CRUD opertions based on schema definition
+// and provided entity types
 class DbContext implements ICrudRepository
 {
     private $dbPath;

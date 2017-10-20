@@ -1,5 +1,6 @@
-# htaccess basic auth does not suit this application
-# using auth scripts instead
+# htaccess basic auth using htaccess does not suit
+# this application. Since the assignment spec does
+# not specify the method using auth scripts instead.
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 # turn off indexes
 Options -Indexes
